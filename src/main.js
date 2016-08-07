@@ -70,9 +70,7 @@ class Entity {
 
 
 function start(canvas) {
-  game = new Game(canvas);
-
-  game.start();
+  new Game(canvas).start();
 }
 
 export default {
