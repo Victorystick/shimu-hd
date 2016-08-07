@@ -1,7 +1,13 @@
+
 class Point {
   constructor(x, y) {
     this.x = x;
     this.y = y;
+  }
+
+  move(dx, dy) {
+    this.x += dx;
+    this.y += dy;
   }
 }
 
@@ -53,6 +59,31 @@ class Game {
     if (this.running) {
       requestAnimationFrame(this.boundTick);
     }
+  }
+}
+
+class Gun {
+  constructor(game, owner, projectile, reticule) {
+    this.game = game;
+    this.owner = owner;
+    this.projectileConstructor = projectile;
+    this.reticule = reticule;
+  }
+
+  fire() {
+    const bullet = new this.projectileConstructor(owner, reticule);
+  }
+}
+
+class Bullet extends Entity {
+  constructor(owner, reticule) {
+    super(owner.point, 2, 'gray');
+    this.direction = {x: 1, y = 0};
+    this.owner = owner;
+  }
+
+  tick() {
+    this.point.move(this.direction);
   }
 }
 
