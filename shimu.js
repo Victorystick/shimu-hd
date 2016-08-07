@@ -42,19 +42,23 @@ class Game {
 
     this.ctx = canvas.getContext('2d');
 
+    this.player = null;
+    this.entities = [];
     this.running = true;
-    this.shimu = new Entity(new Point(50, 50), new Size(10, 10), 'red');
 
     this.boundTick = () => this.tick();
   }
 
   start() {
+    this.player = new Entity(new Point(50, 50), new Size(10, 10), 'red');
+    this.entities.push(this.player);
+
     this.running = true;
     requestAnimationFrame(this.boundTick);
   }
 
   tick() {
-    this.shimu.draw(this.ctx);
+    this.entities.forEach(draw, this.ctx)
 
     if (this.running) {
       requestAnimationFrame(this.boundTick);
@@ -68,10 +72,29 @@ class Gun {
     this.owner = owner;
     this.projectileConstructor = projectile;
     this.reticule = reticule;
+
+    this.ammo = 0;
+    this.maxAmmo = 15;
+    this.cooldown = 0;
+  }
+
+  tick() {
+    if (this.cooldown === 0 && this.ammo < this.maxAmmo) {
+      this.ammo++;
+    } else {
+      this.cooldown--;
+    }
   }
 
   fire() {
-    const bullet = new this.projectileConstructor(owner, reticule);
+    if (this.ammo > 0)  {
+      this.ammo--;
+      const bullet = this.projectileConstructor(owner, reticule);
+      this.game.entities.push(bullet);
+    }
+    if (this.cooldown < this.maxAmmo*3) {
+      this.cooldown++;
+    }
   }
 }
 
@@ -85,6 +108,14 @@ class Bullet extends Entity {
   tick() {
     this.point.move(this.direction);
   }
+}
+
+/**
+ * @param {Entity} entity
+ * @this {CanvasRenderingContext2D}
+ */
+function draw(entity) {
+  entity.draw(this);
 }
 
 
