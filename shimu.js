@@ -36,24 +36,33 @@ class Game {
 
     this.ctx = canvas.getContext('2d');
 
+    this.entities = [];
     this.running = true;
-    this.shimu = new Entity(new Point(50, 50), new Size(10, 10), 'red');
 
     this.boundTick = () => this.tick();
   }
 
   start() {
+    this.entities.push(new Entity(new Point(50, 50), new Size(10, 10), 'red'));
     this.running = true;
     requestAnimationFrame(this.boundTick);
   }
 
   tick() {
-    this.shimu.draw(this.ctx);
+    this.entities.forEach(draw, this.ctx)
 
     if (this.running) {
       requestAnimationFrame(this.boundTick);
     }
   }
+}
+
+/**
+ * @param {Entity} entity
+ * @this {CanvasRenderingContext2D}
+ */
+function draw(entity) {
+  entity.draw(this);
 }
 
 
