@@ -1,0 +1,2 @@
+--require reify
+src/**/*_test.js

@@ -1,3 +1,4 @@
+import {Keyboard} from './controls.js';
 
 class Point {
   constructor(x, y) {
@@ -15,22 +16,6 @@ class Size {
   constructor(width, height) {
     this.width = width;
     this.height = height;
-  }
-}
-
-
-class Keyboard {
-  constructor(element) {
-    this.element = element;
-
-    this.keyMap = {};
-
-    this.element.addEventListener('keydown', this);
-    this.element.addEventListener('keyup', this);
-  }
-
-  handleEvent(event) {
-    this.keyMap[ event.key ] = event.type === 'keydown';
   }
 }
 
@@ -134,11 +119,9 @@ class Entity {
 
 
 function start(canvas) {
-  game = new Game(canvas);
-
-  game.start();
+  new Game(canvas).start();
 }
 
-var Shimu = {
+export default {
   start: start,
 };
