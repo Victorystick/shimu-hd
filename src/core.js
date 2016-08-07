@@ -19,6 +19,8 @@ export class Vec2 {
   }
 }
 
+Vec2.ZERO = Object.freeze(new Vec2(0, 0));
+
 export class Size {
   constructor(width, height) {
     this.width = width;
