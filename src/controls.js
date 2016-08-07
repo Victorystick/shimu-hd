@@ -4,6 +4,7 @@ import {Vec2} from './core.js';
 interface EntityControls {
   getFaceDirection(entity: Entity): Vec2;
   getMoveDirection(): Vec2;
+  attemptsPrimaryAction(): boolean;
 }
 */
 
@@ -11,26 +12,38 @@ export class Keyboard {
   constructor(element) {
     this.element = element;
 
-    this.mouse = Vec2.ZERO;
+    this.mousePosition = Vec2.ZERO;
+    this.buttons = 0;
+
     this.keyMap = {};
 
     this.element.addEventListener('keydown', this);
     this.element.addEventListener('keyup', this);
+    this.element.addEventListener('mousedown', this);
     this.element.addEventListener('mousemove', this);
+    this.element.addEventListener('mouseup', this);
   }
 
   handleEvent(event) {
     if (event.type === 'mousemove') {
       const rect = this.element.getBoundingClientRect();
-      this.mouse = new Vec2(event.clientX - rect.left, event.clientY - rect.top);
+      this.mousePosition = new Vec2(event.clientX - rect.left, event.clientY - rect.top);
       return;
+    }
+
+    if (event.type === 'mousedown' || event.type === 'mouseup') {
+      this.buttons = event.buttons;
     }
 
     this.keyMap[ event.key ] = event.type === 'keydown';
   }
 
+  attemptsPrimaryAction() {
+    return (this.buttons & 1) > 0;
+  }
+
   getFaceDirection(entity) {
-    return this.mouse.sub(entity.position);
+    return Vec2.sub(this.mousePosition, entity.position);
   }
 
   getMoveDirection() {
