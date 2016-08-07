@@ -11,12 +11,12 @@ export class Gun {
     this.cooldown = 0;
   }
 
-  tick() {
+  update(game, delta) {
     if (this.cooldown <= 0 && this.ammo < this.maxAmmo) {
       this.ammo++;
       this.cooldown = 0;
     } else {
-      this.cooldown--;
+      this.cooldown -= delta;
     }
   }
 
@@ -35,7 +35,7 @@ export class Gun {
       game.entities.push(bullet);
     }
     if (this.cooldown < this.maxAmmo*3) {
-      this.cooldown++;
+      this.cooldown += 50;
     }
   }
 }
