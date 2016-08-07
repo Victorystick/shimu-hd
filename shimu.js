@@ -36,6 +36,7 @@ class Game {
 
     this.ctx = canvas.getContext('2d');
 
+    this.player = null;
     this.entities = [];
     this.running = true;
 
@@ -43,7 +44,9 @@ class Game {
   }
 
   start() {
-    this.entities.push(new Entity(new Point(50, 50), new Size(10, 10), 'red'));
+    this.player = new Entity(new Point(50, 50), new Size(10, 10), 'red');
+    this.entities.push(this.player);
+
     this.running = true;
     requestAnimationFrame(this.boundTick);
   }
