@@ -2,8 +2,8 @@ import {Vec2} from './core.js';
 
 /*
 interface EntityControls {
-  getFace(entity: Entity): Vec2;
-  getMovement(): Vec2;
+  getFaceDirection(entity: Entity): Vec2;
+  getMoveDirection(): Vec2;
 }
 */
 
@@ -29,12 +29,12 @@ export class Keyboard {
     this.keyMap[ event.key ] = event.type === 'keydown';
   }
 
-  getFace(entity) {
+  getFaceDirection(entity) {
     return this.mouse.sub(entity.position);
   }
 
-  getMovement() {
-    const vec = new Vec2();
+  getMoveDirection() {
+    const vec = new Vec2(0, 0);
 
     if (this.keyMap['d']) {
       vec.x += 1;
@@ -50,7 +50,10 @@ export class Keyboard {
       vec.y -= 1;
     }
 
-    vec.normalize();
-    return vec;
+    if (vec.length() === 0) {
+      return vec;
+    }
+
+    return vec.normalize();
   }
 }

@@ -13,6 +13,6 @@ export class ArmedEntity extends Entity {
 
   draw(ctx) {
     super.draw(ctx);
-    this.gun.draw(ctx);
+    // this.gun.draw(ctx);
   }
 }

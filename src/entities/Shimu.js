@@ -9,9 +9,10 @@ export class Shimu extends ArmedEntity {
   constructor(position, controls) {
     super(position, size, 'red', new Gun(Bullet));
     this.controls = controls;
+    this.speed = 0.1;
   }
 
   update(game, delta) {
-    
+    this.position.add(this.controls.getMoveDirection(this).scale(this.speed * delta));
   }
 }
