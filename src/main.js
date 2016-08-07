@@ -35,7 +35,8 @@ class Game {
   }
 
   start() {
-    this.player = new Entity(new Point(50, 50), new Size(10, 10), 'red');
+    this.player = new ArmedEntity(new Point(50, 50), new Size(10, 10), 'red',
+      new Gun(this, Bullet.constructor));
     this.entities.push(this.player);
 
     this.running = true;
@@ -52,11 +53,11 @@ class Game {
 }
 
 class Gun {
-  constructor(game, owner, projectile, reticule) {
+  constructor(game, projectile) {
     this.game = game;
-    this.owner = owner;
+    this.owner = null;
     this.projectileConstructor = projectile;
-    this.reticule = reticule;
+    this.reticule = new Reticule(this);
 
     this.ammo = 0;
     this.maxAmmo = 15;
@@ -71,7 +72,15 @@ class Gun {
     }
   }
 
+  draw(ctx) {
+    this.reticule.draw(ctx);
+  }
+
   fire() {
+    if (this.owner === null) {
+      return;
+    }
+
     if (this.ammo > 0)  {
       this.ammo--;
       const bullet = this.projectileConstructor(owner, reticule);
@@ -83,15 +92,18 @@ class Gun {
   }
 }
 
-class Bullet extends Entity {
-  constructor(owner, reticule) {
-    super(owner.point, 2, 'gray');
-    this.direction = {x: 1, y = 0};
-    this.owner = owner;
+class Reticule {
+  constructor(gun) {
+    this.size = new Size(4,4);
+    this.color = 'white';
+    this.gun = gun;
   }
 
-  tick() {
-    this.point.move(this.direction);
+  draw(ctx) {
+    ctx.strokeStyle = String(this.color);
+    ctx.lineWidth = String(3);
+    ctx.rect(this.gun.owner.point.x + 7, this.gun.owner.point.y, this.size.width, this.size.height);
+    ctx.stroke();
   }
 }
 
@@ -114,6 +126,35 @@ class Entity {
   draw(ctx) {
     ctx.fillStyle = String(this.color);
     ctx.fillRect(this.point.x, this.point.y, this.size.width, this.size.height);
+  }
+}
+
+class ArmedEntity extends Entity {
+  constructor(point, size, color, gun) {
+    super(point, size, color);
+    this.equip(gun);
+  }
+
+  equip(gun) {
+    this.gun = gun;
+    gun.owner = this;
+  }
+
+  draw(ctx) {
+    super.draw(ctx);
+    this.gun.draw(ctx);
+  }
+}
+
+class Bullet extends Entity {
+  constructor(owner, reticule) {
+    super(owner.point, 2, 'gray');
+    this.direction = new Point(1, 0);
+    this.owner = owner;
+  }
+
+  tick() {
+    this.point.move(this.direction.x, this.direction.y);
   }
 }
 
