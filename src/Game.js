@@ -3,17 +3,17 @@ import {Shimu} from './entities/all.js';
 import {Vec2} from './core.js';
 
 export class Game {
-  constructor(canvas, controls) {
+  constructor(canvas, controls, nextFrame) {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
 
     this.controls = controls;
 
+    this.nextFrame = nextFrame;
+
     this.player = null;
     this.entities = [];
     this.running = true;
-
-    this.boundTick = () => this.tick();
   }
 
   start() {
@@ -21,14 +21,20 @@ export class Game {
     this.entities.push(this.player);
 
     this.running = true;
-    requestAnimationFrame(this.boundTick);
+    this.nextFrame(this.tick, this);
   }
 
-  tick() {
-    this.entities.forEach(draw, this.ctx)
+  tick(delta) {
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+    for (var i = 0; i < this.entities.length; i++) {
+      this.entities[i].update(this, delta);
+    }
+
+    this.entities.forEach(draw, this.ctx);
 
     if (this.running) {
-      requestAnimationFrame(this.boundTick);
+      this.nextFrame(this.tick, this);
     }
   }
 }
