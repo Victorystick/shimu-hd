@@ -2,7 +2,7 @@ import assert from 'assert';
 import {Keyboard} from './controls.js';
 
 describe('Keyboard', () => {
-  it('listens for "keydown", and "keyup" events', () => {
+  it('listens for "keydown", "keyup" and "mousemove" events', () => {
     const types = [];
 
     const element = {
@@ -14,6 +14,6 @@ describe('Keyboard', () => {
 
     new Keyboard(element);
 
-    assert.deepEqual(types, ['keydown', 'keyup']);
+    assert.deepEqual(types, ['keydown', 'keyup', 'mousemove']);
   });
 });
