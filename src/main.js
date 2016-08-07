@@ -1,18 +1,6 @@
 import {Keyboard} from './controls.js';
-
-class Point {
-  constructor(x, y) {
-    this.x = x;
-    this.y = y;
-  }
-}
-
-class Size {
-  constructor(width, height) {
-    this.width = width;
-    this.height = height;
-  }
-}
+import {Shimu} from './entities/all.js';
+import {Vec2} from './core.js';
 
 class Game {
   constructor(canvas) {
@@ -30,7 +18,7 @@ class Game {
   }
 
   start() {
-    this.player = new Entity(new Point(50, 50), new Size(10, 10), 'red');
+    this.player = new Shimu(new Vec2(50, 50), null);
     this.entities.push(this.player);
 
     this.running = true;
@@ -54,25 +42,8 @@ function draw(entity) {
   entity.draw(this);
 }
 
-
-class Entity {
-  constructor(point, size, color) {
-    this.point = point;
-    this.size = size;
-    this.color = color;
-  }
-
-  draw(ctx) {
-    ctx.fillStyle = String(this.color);
-    ctx.fillRect(this.point.x, this.point.y, this.size.width, this.size.height);
-  }
-}
-
-
-function start(canvas) {
-  new Game(canvas).start();
-}
-
 export default {
-  start: start,
+  start(canvas) {
+    new Game(canvas).start();
+  },
 };
