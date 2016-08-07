@@ -42,6 +42,8 @@ function draw(entity) {
   entity.draw(this);
 }
 
+
+
 export default {
   start(canvas) {
     new Game(canvas).start();
