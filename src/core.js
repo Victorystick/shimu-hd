@@ -5,6 +5,10 @@ export class Vec2 {
     this.y = y;
   }
 
+  clone() {
+    return new Vec2(this.x, this.y);
+  }
+
   // Adds vectors `a` and `b`, returning a new vector.
   static add(a, b) {
     return new Vec2(a.x + b.x, a.y + b.y);

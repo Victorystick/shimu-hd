@@ -1,3 +1,4 @@
+import {Vec2, Size} from '../core.js';
 import {Entity} from './Entity.js';
 
 export class Enemy extends Entity {
@@ -12,9 +13,15 @@ export class Enemy extends Entity {
 		diff.normalize();
 
 		//Account for speed and delta.
-		diff.x *= speed * delta;
-		diff.y *= speed * delta;
+		diff.x *= this.speed * delta;
+		diff.y *= this.speed * delta;
 
-		this.position.move(diff);
+		this.position.add(diff);
+
+		
+	}
+
+	static standard(position, speed) {
+		return new Enemy(position, new Size(5,5), 'yellow', 10, speed);
 	}
 }

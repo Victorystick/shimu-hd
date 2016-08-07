@@ -6,7 +6,8 @@
   "scripts": {
     "test": "mocha",
     "test:watch": "npm run test -- -w",
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "build:watch": "npm run build -- -w"
   },
   "repository": {
     "type": "git",
@@ -25,6 +26,7 @@
   "devDependencies": {
     "mocha": "^3.0.1",
     "reify": "^0.3.6",
-    "rollup": "^0.34.7"
+    "rollup": "^0.34.7",
+    "rollup-watch": "^2.5.0"
   }
 }
