@@ -2,13 +2,17 @@ import {Size} from '../core.js';
 import {Entity} from './Entity.js';
 
 export class Bullet extends Entity {
-  constructor(owner, reticule) {
-    super(owner.position.clone(), new Size(2,2), 'white');
-    this.direction = owner.getFacingDirection().scale(15);
-    this.owner = owner;
+  constructor(position, direction, owner) {
+    super(position, new Size(2,2), 'white');
+    this.direction = direction;
+    this.speed = direction.length();
   }
 
-  update() {
-    this.position.add(this.direction);
+  update(game, delta) {
+    this.position.add(this.direction.setLength(delta * this.speed));
+
+    if (!game.getBoard().intersects(this)) {
+      game.remove(this);
+    }
   }
 }

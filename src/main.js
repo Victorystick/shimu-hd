@@ -6,6 +6,6 @@ export default {
   start(canvas) {
     const ctrl = new controls.Keyboard(canvas);
     const ticker = createAnimationTicker();
-    new Game(canvas, ctrl, ticker).start();
+    new Game(canvas.getContext('2d'), ctrl, ticker).start();
   },
 };

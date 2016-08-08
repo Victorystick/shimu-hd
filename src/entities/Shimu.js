@@ -22,7 +22,7 @@ export class Shimu extends ArmedEntity {
     }
   }
 
-  getFacingDirection() {
+  getFaceDirection() {
     return this.controls.getFaceDirection(this);
   }
 }

@@ -1,27 +1,34 @@
 import {Keyboard} from './controls.js';
-import {Shimu} from './entities/all.js';
-import {Enemy} from './entities/Enemy.js';
-import {Vec2} from './core.js';
+import {Enemy, Entity, Shimu} from './entities/all.js';
+import {Size, Vec2} from './core.js';
 
 export class Game {
-  constructor(canvas, controls, nextFrame) {
-    this.canvas = canvas;
-    this.ctx = canvas.getContext('2d');
+  constructor(context, controls, nextFrame) {
+    this.ctx = context;
+    const size = Size.from(context.canvas);
 
     this.controls = controls;
 
     this.nextFrame = nextFrame;
 
+    this.board = new Entity(new Vec2(size.width / 2, size.height / 2), size);
+
     this.player = null;
     this.entities = [];
+    this.removeSet = new Set();
+
     this.running = true;
 
     this.level = 0;
     this.timeSinceSpawn = 0;
   }
 
+  getBoard() {
+    return this.board;
+  }
+
   getSize() {
-    return this.canvas;
+    return this.board.size;
   }
 
   start() {
@@ -35,13 +42,21 @@ export class Game {
   }
 
   tick(delta) {
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.update(delta);
+    this.render();
 
+    if (this.running) {
+      this.nextFrame(this.tick, this);
+    }
+  }
+
+  update(delta) {
     for (var i = 0; i < this.entities.length; i++) {
       this.entities[i].update(this, delta);
     }
 
-    this.entities.forEach(draw, this.ctx);
+    removeElementsInSet(this.entities, this.removeSet);
+    this.removeSet.clear();
 
     this.timeSinceSpawn += delta;
     if (this.timeSinceSpawn > 15000 || this.entities.length < 10) {
@@ -50,10 +65,34 @@ export class Game {
       this.timeSinceSpawn -= 15000;
     }
 
-    if (this.running) {
-      this.nextFrame(this.tick, this);
-    }
+    console.log(this.entities.length);
   }
+
+  remove(entity) {
+    this.removeSet.add(entity);
+  }
+
+  render() {
+    this.ctx.clearRect(0, 0, this.board.size.width, this.board.size.height);
+
+    this.entities.forEach(draw, this.ctx);
+  }
+}
+
+export function removeElementsInSet(elements, set) {
+  let j = 0;
+
+  for (let i = 0; i < elements.length; i++) {
+    // If we should remove this entity, ignore it for now.
+    if (set.has(elements[i])) {
+      continue;
+    }
+
+    // Otherwise, move the current entity to the `j`th index.
+    elements[j++] = elements[i];
+  }
+
+  elements.length = j;
 }
 
 function spawnEnemies(game, level) {

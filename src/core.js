@@ -40,12 +40,15 @@ export class Vec2 {
   }
 
   normalize() {
-    this.scale(1 / this.length());
-    return this;
+    return this.setLength(1);
   }
 
   length() {
     return Math.sqrt(this.x * this.x + this.y * this.y);
+  }
+
+  setLength(n) {
+    return this.scale(n / this.length());
   }
 }
 
@@ -55,5 +58,9 @@ export class Size {
   constructor(width, height) {
     this.width = width;
     this.height = height;
+  }
+
+  static from(other) {
+    return new Size(other.width, other.height);
   }
 }

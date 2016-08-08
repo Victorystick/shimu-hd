@@ -9,16 +9,10 @@ export class Enemy extends Entity {
 	}
 
 	update(game, delta) {
-		var diff = Vec2.sub(game.player.position, this.position)
-		diff.normalize();
+		const movement = Vec2.sub(game.player.position, this.position)
+			.setLength(this.speed * delta);
 
-		//Account for speed and delta.
-		diff.x *= this.speed * delta;
-		diff.y *= this.speed * delta;
-
-		this.position.add(diff);
-
-		
+		this.position.add(movement);
 	}
 
 	static standard(position, speed) {

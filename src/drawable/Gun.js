@@ -31,7 +31,10 @@ export class Gun {
 
     if (this.ammo > 0)  {
       this.ammo--;
-      const bullet = new this.projectileConstructor(this.owner, this.reticule);
+      const bullet = new this.projectileConstructor(
+        this.owner.position.clone(),
+        this.owner.getFaceDirection(),
+        this.owner);
       game.entities.push(bullet);
     }
     if (this.cooldown < this.maxAmmo*3) {
