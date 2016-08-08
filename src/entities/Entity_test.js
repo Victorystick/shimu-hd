@@ -10,6 +10,8 @@ describe('Entity', () => {
     const e2 = new Entity(new Vec2(9, 4), size, null);
     const e3 = new Entity(new Vec2(10, 0), size, null);
 
+    assert(e1.intersects(e1), 'things should intersect themselves');
+
     assert(e1.intersects(e2), 'should intersect');
 
     assert(!e1.intersects(e3), 'should not intersect');

@@ -34,4 +34,21 @@ describe('Bullet', () => {
     bullet.update(game, 10);
     assert(game.removeSet.has(bullet), 'bullet should be in removeSet');
   });
+
+  describe('hit', () => {
+    const ownerBullet = new Bullet(Vec2.ZERO, Vec2.ZERO, null);
+    const bullet = new Bullet(Vec2.ZERO, Vec2.ZERO, ownerBullet);
+
+    it('cannot hit itself', () => {
+      assert(!bullet.hits(bullet));
+    });
+
+    it('cannot hit its owner', () => {
+      assert(!bullet.hits(ownerBullet));
+    });
+
+    it('can hit anything else', () => {
+      assert(ownerBullet.hits(bullet));
+    });
+  });
 });
