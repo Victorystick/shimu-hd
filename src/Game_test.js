@@ -1,4 +1,5 @@
 import assert from 'assert';
+import {Size} from './core.js';
 import {Game, removeElementsInSet} from './Game.js';
 
 describe('removeElementsInSet', () => {
@@ -27,5 +28,49 @@ describe('removeElementsInSet', () => {
     removeElementsInSet(array, set);
 
     assert.deepEqual(array, [2, 5, 7]);
+  });
+});
+
+describe('Game', () => {
+  const fakeContext = { canvas: new Size(0, 0) };
+
+  it('initialize', () => {
+    let gamePassedToLogic;
+
+    const initLogic = {
+      initialize(game) {
+        gamePassedToLogic = game;
+      }
+    };
+
+    const game = new Game(fakeContext, initLogic, null, null);
+    game.initialize();
+
+    // Assume the player character is the only entity.
+    assert.deepEqual(game.entities, [game.player]);
+
+    // `logic.initialize` should be called with the game instance.
+    assert.equal(gamePassedToLogic, game);
+  });
+
+  it('update', () => {
+    let gamePassedToLogic;
+
+    const updateLogic = {
+      initialize() {},
+
+      update(game, delta) {
+        gamePassedToLogic = game;
+        assert.equal(delta, 13);
+      }
+    };
+
+    const game = new Game(fakeContext, updateLogic, null, null);
+
+    // Assume 13ms has passed.
+    game.update(13);
+
+    // `logic.update` should be called with the game instance.
+    assert.equal(gamePassedToLogic, game);
   });
 });
