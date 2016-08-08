@@ -11,16 +11,17 @@ export class Gun {
     this.cooldown = 0;
   }
 
-  tick() {
-    if (this.cooldown === 0 && this.ammo < this.maxAmmo) {
+  update(game, delta) {
+    if (this.cooldown <= 0 && this.ammo < this.maxAmmo) {
       this.ammo++;
+      this.cooldown = 0;
     } else {
-      this.cooldown--;
+      this.cooldown -= delta;
     }
   }
 
   draw(ctx) {
-    this.reticule.draw(ctx);
+    //this.reticule.draw(ctx);
   }
 
   fire(game) {
@@ -30,11 +31,11 @@ export class Gun {
 
     if (this.ammo > 0)  {
       this.ammo--;
-      const bullet = new this.projectileConstructor(owner, reticule);
+      const bullet = new this.projectileConstructor(this.owner, this.reticule);
       game.entities.push(bullet);
     }
     if (this.cooldown < this.maxAmmo*3) {
-      this.cooldown++;
+      this.cooldown += 50;
     }
   }
 }

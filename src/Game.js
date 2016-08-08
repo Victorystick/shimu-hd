@@ -1,5 +1,6 @@
 import {Keyboard} from './controls.js';
 import {Shimu} from './entities/all.js';
+import {Enemy} from './entities/Enemy.js';
 import {Vec2} from './core.js';
 
 export class Game {
@@ -14,11 +15,20 @@ export class Game {
     this.player = null;
     this.entities = [];
     this.running = true;
+
+    this.level = 0;
+    this.timeSinceSpawn = 0;
+  }
+
+  getSize() {
+    return this.canvas;
   }
 
   start() {
     this.player = new Shimu(new Vec2(50, 50), this.controls);
     this.entities.push(this.player);
+
+    spawnEnemies(this, this.level++);
 
     this.running = true;
     this.nextFrame(this.tick, this);
@@ -33,10 +43,32 @@ export class Game {
 
     this.entities.forEach(draw, this.ctx);
 
+    this.timeSinceSpawn += delta;
+    if (this.timeSinceSpawn > 15000 || this.entities.length < 10) {
+      spawnEnemies(this, this.level++);
+      //game.entities.push(new Enemy(new Vec2(20, 20), 5, 'yellow', 0.05 + 0.002*level))
+      this.timeSinceSpawn -= 15000;
+    }
+
     if (this.running) {
       this.nextFrame(this.tick, this);
     }
   }
+}
+
+function spawnEnemies(game, level) {
+  for (var i = 0; i < 30; i++) {
+    game.entities.push(Enemy.standard(bogoSpawn(game.getSize(), game.player), 0.05 + 0.002*level))
+  }
+}
+
+function bogoSpawn(size, player) {
+  var position = new Vec2(0, 0);
+  do {
+    position.x = Math.random()*size.width;
+    position.y = Math.random()*size.height;
+  } while (Vec2.sub(position, player.position).length() < 100)
+  return position;
 }
 
 /**

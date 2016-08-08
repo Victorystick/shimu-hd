@@ -43,7 +43,7 @@ export class Keyboard {
   }
 
   getFaceDirection(entity) {
-    return Vec2.sub(this.mousePosition, entity.position);
+    return Vec2.sub(this.mousePosition, entity.position).normalize();
   }
 
   getMoveDirection() {

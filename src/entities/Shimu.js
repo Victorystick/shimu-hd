@@ -14,5 +14,15 @@ export class Shimu extends ArmedEntity {
 
   update(game, delta) {
     this.position.add(this.controls.getMoveDirection(this).scale(this.speed * delta));
+
+    this.gun.update(game, delta);
+
+    if (this.controls.attemptsPrimaryAction()) {
+    	this.gun.fire(game);
+    }
+  }
+
+  getFacingDirection() {
+    return this.controls.getFaceDirection(this);
   }
 }
