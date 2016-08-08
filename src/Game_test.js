@@ -1,6 +1,7 @@
 import assert from 'assert';
 import {Size} from './core.js';
 import {Context} from './testing/fakes.js';
+import {createArgSaver} from './testing/mocks.js';
 import {Game, removeElementsInSet} from './Game.js';
 
 describe('removeElementsInSet', () => {
@@ -36,42 +37,70 @@ describe('Game', () => {
   const fakeContext = new Context(new Size(0, 0));
 
   it('initialize', () => {
-    let gamePassedToLogic;
-
-    const initLogic = {
-      initialize(game) {
-        gamePassedToLogic = game;
-      }
+    const logic = {
+      initialize: createArgSaver()
     };
 
-    const game = new Game(fakeContext, initLogic, null, null);
+    const game = new Game(fakeContext, logic, null, null);
     game.initialize();
 
     // Assume the player character is the only entity.
     assert.deepEqual(game.entities, [game.player]);
 
     // `logic.initialize` should be called with the game instance.
-    assert.equal(gamePassedToLogic, game);
+    assert.deepEqual(logic.initialize.args, [game]);
+  });
+
+  it('start', () => {
+    const framer = createArgSaver();
+    const game = new Game(fakeContext, { initialize() {} }, null, framer);
+
+    assert.equal(game.start(), game);
+    assert.deepEqual(framer.args, [game.tick, game]);
   });
 
   it('update', () => {
-    let gamePassedToLogic;
-
-    const updateLogic = {
-      initialize() {},
-
-      update(game, delta) {
-        gamePassedToLogic = game;
-        assert.equal(delta, 13);
-      }
+    const logic = {
+      update: createArgSaver()
     };
 
-    const game = new Game(fakeContext, updateLogic, null, null);
+    const game = new Game(fakeContext, logic, null, null);
 
     // Assume 13ms has passed.
     game.update(13);
 
     // `logic.update` should be called with the game instance.
-    assert.equal(gamePassedToLogic, game);
+    assert.deepEqual(logic.update.args, [game, 13]);
+  });
+
+  describe('tick', () => {
+    it('calls update and render', () => {
+      const logic = {
+        continue: createArgSaver(false),
+        update: createArgSaver()
+      };
+
+      const game = new Game(fakeContext, logic, null, null);
+      game.tick(10);
+
+      assert.deepEqual(logic.update.args, [game, 10]);
+      assert.deepEqual(logic.continue.args, []);
+    });
+
+    it('it also calls nextFrame if logic.continue()', () => {
+      const logic = {
+        continue: createArgSaver(true),
+        update: createArgSaver()
+      };
+
+      const framer = createArgSaver();
+
+      const game = new Game(fakeContext, logic, null, framer);
+      game.tick(10);
+
+      assert.deepEqual(logic.update.args, [game, 10]);
+      assert.deepEqual(logic.continue.args, []);
+      assert.deepEqual(framer.args, [game.tick, game]);
+    });
   });
 });
