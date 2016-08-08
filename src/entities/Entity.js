@@ -7,8 +7,9 @@ export class Entity {
   }
 
   draw(ctx) {
+    const { width, height } = this.size;
     ctx.fillStyle = String(this.color);
-    ctx.fillRect(this.position.x, this.position.y, this.size.width, this.size.height);
+    ctx.fillRect(this.position.x - width/2, this.position.y - height/2, width, height);
   }
 
   /**

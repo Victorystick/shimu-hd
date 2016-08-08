@@ -1,9 +1,11 @@
 import {Size} from '../core.js';
 import {Entity} from './Entity.js';
 
+const size = new Size(2, 2);
+
 export class Bullet extends Entity {
   constructor(position, direction, owner) {
-    super(position, new Size(2,2), 'white');
+    super(position, size, 'white');
     this.direction = direction;
     this.speed = direction.length();
     this.owner = owner;
@@ -33,5 +35,17 @@ export class Bullet extends Entity {
     if (entity === this || entity === this.owner) return false;
 
     return this.intersects(entity);
+  }
+}
+
+export class LineBullet extends Bullet {
+  draw(ctx) {
+    ctx.beginPath();
+    ctx.strokeStyle = String(this.color);
+    ctx.moveTo(this.position.x, this.position.y);
+
+    const prev = this.direction.clone().negate().add(this.position);
+    ctx.lineTo(prev.x, prev.y);
+    ctx.stroke();
   }
 }

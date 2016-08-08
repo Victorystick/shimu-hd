@@ -5,6 +5,11 @@ export class Vec2 {
     this.y = y;
   }
 
+  copy(other) {
+    this.x = other.x;
+    this.y = other.y;
+  }
+
   clone() {
     return new Vec2(this.x, this.y);
   }
@@ -37,6 +42,10 @@ export class Vec2 {
     this.x *= n;
     this.y *= n;
     return this;
+  }
+
+  negate() {
+    return this.scale(-1);
   }
 
   normalize() {
