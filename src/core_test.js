@@ -14,14 +14,14 @@ describe('Vec2', () => {
   });
 
   it('normalize', () => {
-    const v1 = new Vec2(2, 7);
-    v1.normalize();
-    assert.equal(v1.length(), 1);
+    assert.equal(new Vec2(2, 7).normalize().length(), 1);
   });
 
   it('scale', () => {
-    const v1 = new Vec2(1, 0);
-    v1.scale(7);
-    assert.equal(v1.x, 7);
+    assert.equal(new Vec2(1, 0).scale(7).x, 7);
+  });
+
+  it('setLength', () => {
+    assert.equal(new Vec2(0, 4).setLength(3).length(), 3);
   });
 });
