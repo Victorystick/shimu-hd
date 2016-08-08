@@ -1,5 +1,6 @@
 import assert from 'assert';
 import {Size} from './core.js';
+import {Context} from './testing/fakes.js';
 import {Game, removeElementsInSet} from './Game.js';
 
 describe('removeElementsInSet', () => {
@@ -32,7 +33,7 @@ describe('removeElementsInSet', () => {
 });
 
 describe('Game', () => {
-  const fakeContext = { canvas: new Size(0, 0) };
+  const fakeContext = new Context(new Size(0, 0));
 
   it('initialize', () => {
     let gamePassedToLogic;
