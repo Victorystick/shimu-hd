@@ -48,7 +48,9 @@ export class Vec2 {
   }
 
   setLength(n) {
-    return this.scale(n / this.length());
+    const length = this.length();
+
+    return length ? this.scale(n / length) : this;
   }
 }
 

@@ -9,6 +9,8 @@ export class Enemy extends Entity {
 	}
 
 	update(game, delta) {
+		if (!game.player) return;
+
 		const movement = Vec2.sub(game.player.position, this.position)
 			.setLength(this.speed * delta);
 
