@@ -4,6 +4,8 @@ export class Context {
   constructor(size) {
     this.canvas = size;
   }
+
+  clearRect() {}
 }
 
 export class Controls {
