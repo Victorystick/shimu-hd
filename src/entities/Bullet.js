@@ -19,7 +19,9 @@ export class Bullet extends Entity {
 
     // If it does, remove both.
     if (other) {
-      this.onCollision(game, other);
+      if (this.onCollision(game, other)) {
+        return;
+      }
     }
 
     if (!game.getBoard().intersects(this)) {
@@ -30,7 +32,7 @@ export class Bullet extends Entity {
   onCollision(game, other) {
       game.remove(other);
       game.remove(this);
-      return;
+      return true;
   }
 
 
@@ -57,7 +59,7 @@ export class LineBullet extends Bullet {
 
 export class PlasmaBullet extends Bullet {
   constructor(position, direction, owner) {
-  	super(position, direction, owner)
+    super(position, direction, owner)
     this.heat = 90;
     this.color = 'orange';
     this.size = new Size(4, 4);
@@ -70,25 +72,25 @@ export class PlasmaBullet extends Bullet {
     super.update(game, delta)
   }
 
-	onCollision(game, other) {
-		if (other.hp) {
-			this.heat -= other.hp*9
-		} else {
+  onCollision(game, other) {
+    if (other.hp) {
+      this.heat -= other.hp*9;
+    } else {
       this.heat -= 10;
     }
-		game.remove(other);
-		this.checkHeat(game);
-    return;
-	}
+    game.remove(other);
+    return this.checkHeat(game);
+  }
 
-	checkHeat(game) {
-		if (this.heat <= 0) {
+  checkHeat(game) {
+    if (this.heat <= 0) {
       game.remove(this);
-      return;
+      return true;
     }
-	}
+    return false;
+  }
 
-	draw(ctx) {
+  draw(ctx) {
     const { width, height } = this.size;
     ctx.fillStyle = String(this.color);
     for(var i = 6; i> 0; i--) {
