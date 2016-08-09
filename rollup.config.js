@@ -1,6 +1,6 @@
 export default {
   entry: 'src/main.js',
-  dest: './shimu.js',
+  dest: './app/shimu.js',
 
   moduleName: 'Shimu',
 
