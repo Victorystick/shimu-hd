@@ -67,7 +67,7 @@ export class PlasmaBullet extends Bullet {
   }
 
   update(game, delta) {
-    this.heat--;
+    this.heat -= delta;
     this.checkHeat(game);
     super.update(game, delta)
   }
