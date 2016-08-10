@@ -60,7 +60,7 @@ export class LineBullet extends Bullet {
 export class PlasmaBullet extends Bullet {
   constructor(position, direction, owner) {
     super(position, direction, owner)
-    this.heat = 90;
+    this.heat = 900;
     this.color = 'orange';
     this.size = new Size(4, 4);
     this.speed /= 5;
