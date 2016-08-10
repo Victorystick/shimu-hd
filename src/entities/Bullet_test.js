@@ -60,41 +60,39 @@ describe('PlasmaBullet', () => {
 
   it('is orange', () => {
     const bullet = new PlasmaBullet(position, direction, null);
-    assert(bullet.color == 'orange');
+    assert.equal(bullet.color, 'orange');
   });
 
-  describe('´Temperature', () => {
-    it('has a temperature', () => {
-      const bullet = new PlasmaBullet(position, direction, null);
-      assert(bullet.heat > 0);
-    });
+  it('has heat', () => {
+    const bullet = new PlasmaBullet(position, direction, null);
+    assert(bullet.heat > 0, 'initial heat should be positive');
+  });
 
-    it('loses heat on collison', () => {
-      const game = new Game(new Context(new Size(0, 0)), null, null, null);
-      const bullet = new PlasmaBullet(position, direction, null);
-      const enemy = Enemy.standard(position, 0);
+  it('loses heat on collison', () => {
+    const game = new Game(new Context(new Size(0, 0)), null, null, null);
+    const bullet = new PlasmaBullet(position, direction, null);
+    const enemy = Enemy.standard(position, 0);
 
-      const oldHeat = bullet.heat;
-      bullet.onCollision(game, enemy);
-      assert(bullet.heat < oldHeat);
-    });
+    const oldHeat = bullet.heat;
+    bullet.onCollision(game, enemy);
+    assert(bullet.heat < oldHeat, 'heat should decrease');
+  });
 
-    it('loses heat over time', () => {
-      const game = new Game(new Context(new Size(0, 0)), null, null, null);
-      const bullet = new PlasmaBullet(position, direction, null);
-      const oldHeat = bullet.heat;
+  it('loses heat over time', () => {
+    const game = new Game(new Context(new Size(0, 0)), null, null, null);
+    const bullet = new PlasmaBullet(position, direction, null);
+    const oldHeat = bullet.heat;
 
-      bullet.update(game, 3);
-      assert(bullet.heat < oldHeat);
-    });
+    bullet.update(game, 3);
+    assert(bullet.heat < oldHeat, 'heat should decrease');
+  });
 
-    it('is removed when out of heat', () => {
-      const bullet = new PlasmaBullet(position, direction, null);
-      const game = new Game(new Context(new Size(0, 0)), null, null, null);
+  it('is removed when out of heat', () => {
+    const bullet = new PlasmaBullet(position, direction, null);
+    const game = new Game(new Context(new Size(0, 0)), null, null, null);
 
-      bullet.heat = 0;
-      bullet.update(game, 0);
-      assert(game.removeSet.has(bullet), 'bullet should be in removeSet');
-    });
-  })
+    bullet.heat = 0;
+    bullet.update(game, 0);
+    assert(game.removeSet.has(bullet), 'bullet should be in removeSet');
+  });
 });
