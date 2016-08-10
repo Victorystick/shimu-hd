@@ -8,6 +8,7 @@
     "test:watch": "npm run test -- -w",
     "build": "rollup -c",
     "build:watch": "npm run build -- -w",
+    "ci": "npm run test && npm run build",
     "deploy": "surge -p ./app -d shimu-hd.surge.sh"
   },
   "repository": {

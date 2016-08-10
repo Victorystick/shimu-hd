@@ -1,3 +1,9 @@
 language: node_js
 node_js:
   - 6
+script: npm run ci
+deploy:
+  provider: surge
+  project: ./app/
+  domain: shimu-hd.surge.sh
+  skip_cleanup: true
