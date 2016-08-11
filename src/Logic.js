@@ -19,9 +19,12 @@ export class Logic {
   update(game, delta) {
     this.timeSinceSpawn += delta;
 
-    if (this.timeSinceSpawn >= 15000 || game.entities.length < 10) {
+    if (this.timeSinceSpawn >= 15000 || game.entities.filter(e => e instanceof Enemy).length < 10) {
       spawnEnemies(game, this.level++);
       this.timeSinceSpawn -= 15000;
+      if (this.timeSinceSpawn < 0) {
+        this.timeSinceSpawn = 0;
+      }
     }
   }
 }
