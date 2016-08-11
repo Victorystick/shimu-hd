@@ -24,6 +24,18 @@ export class Logic {
       this.timeSinceSpawn -= 15000;
     }
   }
+
+  draw(game, ctx) {
+    // TODO(victorystick): should clean this up
+    ctx.font = '14px';
+    ctx.strokeStyle = 'white';
+    ctx.strokeText(`Level: ${this.level}`, 10, 20);
+
+    const gun = game.player.gun;
+    ctx.strokeText(`Ammo:`, 10, 40);
+    ctx.fillStyle = 'white';
+    ctx.fillRect(50, 32, 100 / gun.maxAmmo * gun.ammo, 10);
+  }
 }
 
 function spawnEnemies(game, level) {

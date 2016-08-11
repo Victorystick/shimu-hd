@@ -77,6 +77,7 @@ describe('Game', () => {
     it('calls update and render', () => {
       const logic = {
         continue: createArgSaver(false),
+        draw: createArgSaver(),
         update: createArgSaver()
       };
 
@@ -84,12 +85,14 @@ describe('Game', () => {
       game.tick(10);
 
       assert.deepEqual(logic.update.args, [game, 10]);
+      assert.deepEqual(logic.draw.args, [game, game.ctx]);
       assert.deepEqual(logic.continue.args, []);
     });
 
     it('it also calls nextFrame if logic.continue()', () => {
       const logic = {
         continue: createArgSaver(true),
+        draw: createArgSaver(),
         update: createArgSaver()
       };
 
@@ -99,6 +102,7 @@ describe('Game', () => {
       game.tick(10);
 
       assert.deepEqual(logic.update.args, [game, 10]);
+      assert.deepEqual(logic.draw.args, [game, game.ctx]);
       assert.deepEqual(logic.continue.args, []);
       assert.deepEqual(framer.args, [game.tick, game]);
     });

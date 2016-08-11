@@ -66,6 +66,9 @@ export class Game {
     this.ctx.clearRect(0, 0, this.board.size.width, this.board.size.height);
 
     this.entities.forEach(draw, this.ctx);
+
+    // Draw any logic specific things (like UI) on top of the entities.
+    this.logic.draw(this, this.ctx);
   }
 }
 
