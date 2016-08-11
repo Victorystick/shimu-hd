@@ -12,7 +12,9 @@ export class ScoreSystem {
 	}
 
 	updateScore(player, dscore) {
-		player.score += dscore;
+		if (player != null) {
+			player.score += dscore;
+		}
 	}
 
 	onLevelChange(player, level, timeleft) {
