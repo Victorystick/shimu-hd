@@ -3,7 +3,7 @@ import {Context, Controls} from './testing/fakes.js';
 import {Game} from './Game.js';
 import {Logic} from './Logic.js';
 import {Size} from './core.js';
-import {Enemy} from './entities/all.js';
+import {Enemy, Blob} from './entities/all.js';
 
 describe('Logic', () => {
   const context = new Context(new Size(300, 100));
@@ -36,4 +36,15 @@ describe('Logic', () => {
     game.update(10000);
     assert.equal(game.entities.length, entities + 30);
   });
+
+  it('spawns a Blob after level 3', () => {
+    const logic = new Logic();
+    logic.level = 3;
+    const game = new Game(context, logic, null, null);
+    game.initialize();
+
+
+    assert(game.entities.filter(e => e instanceof Blob).length > 0,
+      'game should start spawning blobs at level 3');
+  })
 });

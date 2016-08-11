@@ -5,6 +5,6 @@
 
 export {ArmedEntity} from './ArmedEntity.js';
 export {Bullet} from './Bullet.js';
-export {Enemy} from './Enemy.js';
+export {Enemy, Blob} from './Enemy.js';
 export {Entity} from './Entity.js';
 export {Shimu} from './Shimu.js';

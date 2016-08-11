@@ -9,6 +9,7 @@ export class Bullet extends Entity {
     this.direction = direction;
     this.speed = direction.length();
     this.owner = owner;
+    this.damage = 20;
   }
 
   update(game, delta) {
@@ -27,6 +28,17 @@ export class Bullet extends Entity {
     if (!game.getBoard().intersects(this)) {
       game.remove(this);
     }
+  }
+
+  onCollision(game, other) {
+      if (other.hp) {
+        other.hp -= this.damage;
+        if (other.hp <= 0) {
+          game.remove(other);
+        }
+      }
+      game.remove(this);
+      return true;
   }
 
   // A bullet is assumed to hit an entity, if it isn't the bullet itself nor

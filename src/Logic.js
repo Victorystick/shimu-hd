@@ -1,5 +1,5 @@
 import {Vec2} from './core.js';
-import {Enemy} from './entities/all.js';
+import {Enemy, Blob} from './entities/all.js';
 
 export class Logic {
   constructor() {
@@ -29,6 +29,11 @@ export class Logic {
 function spawnEnemies(game, level) {
   for (let i = 0; i < 30; i++) {
     game.entities.push(Enemy.standard(bogoSpawn(game.getSize(), game.player), 0.05 + 0.002*level))
+  }
+
+  if (level >= 3) {
+    game.entities.push(
+      Blob.standard( bogoSpawn(game.getSize(), game.player) , 0.01*level));
   }
 }
 
