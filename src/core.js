@@ -74,4 +74,16 @@ export class Size {
   static from(other) {
     return new Size(other.width, other.height);
   }
+
+  add(other) {
+    this.width += other.width;
+    this.height += other.height;
+    return this;
+  }
+
+  scale(n) {
+    this.width *= n;
+    this.height *= n;
+    return this;
+  }
 }
