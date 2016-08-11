@@ -72,6 +72,12 @@ export class PlasmaBullet extends Bullet {
     super.update(game, delta)
   }
 
+  hits(entity) {
+    if (entity instanceof PlasmaBullet) return false;
+
+    return super.hits(entity);
+  }
+
   onCollision(game, other) {
     if (other.hp) {
       this.heat -= other.hp*9;
