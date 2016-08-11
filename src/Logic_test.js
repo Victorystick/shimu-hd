@@ -2,6 +2,7 @@ import assert from 'assert';
 import {Context, Controls} from './testing/fakes.js';
 import {Game} from './Game.js';
 import {Logic} from './Logic.js';
+import {ScoreSystem} from './ScoreSystem.js';
 import {Size} from './core.js';
 import {Enemy} from './entities/all.js';
 
@@ -12,7 +13,8 @@ describe('Logic', () => {
     const logic = new Logic();
     assert.equal(logic.level, 0);
 
-    const game = new Game(context, logic, null, null);
+    const scoreSystem = new ScoreSystem();
+    const game = new Game(context, logic, null, null, scoreSystem);
 
     game.initialize();
     assert.equal(logic.level, 1);
@@ -25,7 +27,8 @@ describe('Logic', () => {
     const logic = new Logic();
     const controls = new Controls();
 
-    const game = new Game(context, logic, controls, null);
+    const scoreSystem = new ScoreSystem();
+    const game = new Game(context, logic, controls, null, scoreSystem);
     game.initialize();
 
     const entities = game.entities.length;

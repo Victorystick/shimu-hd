@@ -1,5 +1,6 @@
 import {Size} from '../core.js';
 import {Entity} from './Entity.js';
+import {Enemy} from './Enemy.js';
 
 const size = new Size(2, 2);
 
@@ -30,9 +31,12 @@ export class Bullet extends Entity {
   }
 
   onCollision(game, other) {
+    if (other instanceof Enemy) {
       game.remove(other);
-      game.remove(this);
-      return true;
+      game.getScoreSystem().onEnemyKilled(this.owner, other);
+    }
+    game.remove(this);
+    return true;
   }
 
 
@@ -84,7 +88,10 @@ export class PlasmaBullet extends Bullet {
     } else {
       this.heat -= 10;
     }
-    game.remove(other);
+    if (other instanceof Enemy) {
+      game.remove(other);
+      game.getScoreSystem().onEnemyKilled(this.owner, other);
+    }
     return this.checkHeat(game);
   }
 

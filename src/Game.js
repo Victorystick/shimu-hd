@@ -3,11 +3,12 @@ import {Entity, Shimu} from './entities/all.js';
 import {Size, Vec2} from './core.js';
 
 export class Game {
-  constructor(context, logic, controls, nextFrame) {
+  constructor(context, logic, controls, nextFrame, scoreSystem) {
     this.ctx = context;
     this.logic = logic;
     this.controls = controls;
     this.nextFrame = nextFrame;
+    this.scoreSystem = scoreSystem;
 
     const size = Size.from(context.canvas);
     this.board = new Entity(new Vec2(size.width / 2, size.height / 2), size);
@@ -25,6 +26,10 @@ export class Game {
     return this.board.size;
   }
 
+  getScoreSystem() {
+    return this.scoreSystem;
+  }
+
   start() {
     this.initialize();
     this.nextFrame(this.tick, this);
@@ -35,6 +40,7 @@ export class Game {
     this.player = new Shimu(new Vec2(50, 50), this.controls);
     this.entities.push(this.player);
 
+    this.scoreSystem.initialize(this.player);
     this.logic.initialize(this);
   }
 

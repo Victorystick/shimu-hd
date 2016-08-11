@@ -4,6 +4,7 @@ import {Enemy} from './Enemy.js';
 import {Vec2, Size} from '../core.js';
 import {Context} from '../testing/fakes.js';
 import {Game} from '../Game.js';
+import {ScoreSystem} from '../ScoreSystem.js';
 
 describe('Bullet', () => {
   const direction = new Vec2(0, 1);
@@ -69,7 +70,7 @@ describe('PlasmaBullet', () => {
   });
 
   it('loses heat on collison', () => {
-    const game = new Game(new Context(new Size(0, 0)), null, null, null);
+    const game = new Game(new Context(new Size(0, 0)), null, null, null, new ScoreSystem());
     const bullet = new PlasmaBullet(position, direction, null);
     const enemy = Enemy.standard(position, 0);
 
@@ -79,7 +80,7 @@ describe('PlasmaBullet', () => {
   });
 
   it('loses heat over time', () => {
-    const game = new Game(new Context(new Size(0, 0)), null, null, null);
+    const game = new Game(new Context(new Size(0, 0)), null, null, null, new ScoreSystem());
     const bullet = new PlasmaBullet(position, direction, null);
     const oldHeat = bullet.heat;
 
@@ -89,7 +90,7 @@ describe('PlasmaBullet', () => {
 
   it('is removed when out of heat', () => {
     const bullet = new PlasmaBullet(position, direction, null);
-    const game = new Game(new Context(new Size(0, 0)), null, null, null);
+    const game = new Game(new Context(new Size(0, 0)), null, null, null, new ScoreSystem());
 
     bullet.heat = 0;
     bullet.update(game, 0);

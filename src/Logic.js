@@ -21,6 +21,8 @@ export class Logic {
 
     if (this.timeSinceSpawn >= 15000 || game.entities.length < 10) {
       spawnEnemies(game, this.level++);
+      const timeRemaining = 15000 - this.timeSinceSpawn
+      game.getScoreSystem().onLevelChange(game.player, this.level, timeRemaining); 
       this.timeSinceSpawn -= 15000;
     }
   }
@@ -35,6 +37,9 @@ export class Logic {
     ctx.strokeText(`Ammo:`, 10, 40);
     ctx.fillStyle = 'white';
     ctx.fillRect(50, 32, 100 / gun.maxAmmo * gun.ammo, 10);
+
+    const score = Math.floor(game.getScoreSystem().getScore(game.player));
+    ctx.strokeText(`Score: ${score}`, 170, 20);
   }
 }
 
