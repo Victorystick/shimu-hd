@@ -1,5 +1,5 @@
 import assert from 'assert';
-import {AsyncCall} from '../testing/asynccalls.js';
+import {CallbackMock} from '../testing/callback.js';
 import {CollisionRules} from './CollisionRules.js';
 import {Vec2, Size} from '../core.js';
 import {Enemy, Bullet, PlasmaBullet} from '../entities/all.js';
@@ -11,45 +11,48 @@ describe('CollisionRules', () => {
     it('calls when types are the same', () => {
       const col = new CollisionRules();
       const bullet = new Bullet(new Vec2(0,0), new Vec2(0,0), null);
-      const call = new AsyncCall().withArgs(bullet, enemy);
+      const call = new CallbackMock();
       col.add(Bullet, Enemy, call.callback());
       
-      col.onCollide(bullet, enemy);
-      assert(call.triggered);
+      col.onCollide(null, bullet, enemy);
+      assert(call.triggered, 'Function was not called');
       assert.equal(call.times, 1);
+      assert.deepEqual(call.actualArgs, [null, bullet, enemy]);
     });
 
     it('calls when entity #1 is of a subclass', () => {
       const col = new CollisionRules();
       const bullet = new PlasmaBullet(new Vec2(0,0), new Vec2(0,0), null);
-      const call = new AsyncCall().withArgs(bullet, enemy);
+      const call = new CallbackMock();
       col.add(Bullet, Enemy, call.callback());
       
-      col.onCollide(bullet, enemy);
-      assert(call.triggered);
+      col.onCollide(null, bullet, enemy);
+      assert(call.triggered, 'Function was not called');
       assert.equal(call.times, 1);
+      assert.deepEqual(call.actualArgs, [null, bullet, enemy]);
     });
 
     it('calls when entity #2 is of a subclass', () => {
       const col = new CollisionRules();
       const bullet = new PlasmaBullet(new Vec2(0,0), new Vec2(0,0), null);
-      const call = new AsyncCall().withArgs(enemy, bullet);
+      const call = new CallbackMock();
       col.add(Enemy, Bullet, call.callback());
       
-      col.onCollide(enemy, bullet);
-      assert(call.triggered);
+      col.onCollide(null, enemy, bullet);
+      assert(call.triggered, 'Function was not called');
       assert.equal(call.times, 1);
+      assert.deepEqual(call.actualArgs, [null, enemy, bullet]);
     });
 
     it('stops calling rules when one returns false', () => {
       const col = new CollisionRules();
       const bullet = new PlasmaBullet(new Vec2(0,0), new Vec2(0,0), null);
-      const call = new AsyncCall().returns(false);
+      const call = new CallbackMock().returns(false);
       col.add(PlasmaBullet, Enemy, call.callback());
       col.add(Bullet, Enemy, call.callback());
       
-      col.onCollide(bullet, enemy);
-      assert(call.triggered);
+      col.onCollide(null, bullet, enemy);
+      assert(call.triggered, 'Function was not called');
       assert.equal(call.times, 1);
     })
   });

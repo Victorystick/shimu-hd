@@ -1,14 +1,15 @@
-export class AsyncCall {
+export class CallbackMock {
   constructor() {
     this.triggered = false;
     this.times = 0;
     this.correctarguments = null;
-    this.args = [];
+    this.expectedArgs = undefined;
+    this.actualArgs = [];
     this.returnValue = undefined;
   }
 
   withArgs(...args) {
-    this.args = args;
+    this.expectedArgs = args;
     return this;
   }
 
@@ -21,7 +22,10 @@ export class AsyncCall {
     return (...args) => {
       this.triggered = true;
       this.times += 1;
-      this.correctarguments = this.checkArguments(args)
+      this.actualArgs = args;
+      if (this.expectedArgs !== undefined) {
+        this.correctarguments = this.checkArguments(args)
+      }
       return this.returnValue;
     }
   }
@@ -31,12 +35,12 @@ export class AsyncCall {
       return false;
     }
 
-    if (args.length !== this.args.length) {
+    if (args.length !== this.expectedArgs.length) {
       return false;
     }
 
     for (var i = 0; i < args.length; i++) {
-      if (args[i] !== this.args[i]) {
+      if (args[i] !== this.expectedArgs[i]) {
         return false;
       }
     }
