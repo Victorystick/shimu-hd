@@ -1,13 +1,15 @@
 import {Vec2} from './core.js';
 import {Enemy} from './entities/all.js';
 import {CollisionRules} from './collision/CollisionRules.js';
+import {Modern} from './collision/modern.js';
 
 export class Logic {
   constructor() {
     this.running = true;
     this.level = 0;
     this.timeSinceSpawn = 0;
-    this.collision = new CollisionRules()
+    this.collision = new CollisionRules();
+    Modern.initialize(this.collision);
   }
 
   initialize(game) {
