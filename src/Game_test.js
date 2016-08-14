@@ -70,7 +70,7 @@ describe('Game', () => {
     // Assume 13ms has passed.
     game.update(13);
 
-    // `logic.update` and `logic.checkCollisions` 
+    // `logic.update` and `logic.checkCollisions`
     // should be called with the game instance.
     assert.deepEqual(logic.update.args, [game, 13]);
     assert.deepEqual(logic.checkCollisions.args, [game, [] ])

@@ -4,15 +4,17 @@ import {CollisionRules} from './collision/CollisionRules.js';
 import {Modern} from './collision/modern.js';
 
 export class Logic {
-  constructor(ruleset) {
+  constructor(collision, scoreSystem) {
+    this.collision = collision;
+    this.scoreSystem = scoreSystem;
+
     this.running = true;
     this.level = 0;
     this.timeSinceSpawn = 0;
-    this.collision = new CollisionRules();
-    ruleset.initialize(this.collision);
   }
 
   initialize(game) {
+    this.scoreSystem.initialize(game.player);
     spawnEnemies(game, this.level++);
   }
 
@@ -23,9 +25,14 @@ export class Logic {
   update(game, delta) {
     this.timeSinceSpawn += delta;
 
-    if (this.timeSinceSpawn >= 15000 || game.entities.length < 10) {
+    if (this.timeSinceSpawn >= 15000 || game.entities.filter(e => e instanceof Enemy).length < 10) {
       spawnEnemies(game, this.level++);
+      const timeRemaining = 15000 - this.timeSinceSpawn
+      this.scoreSystem.onLevelChange(game.player, this.level, timeRemaining);
       this.timeSinceSpawn -= 15000;
+      if (this.timeSinceSpawn < 0) {
+        this.timeSinceSpawn = 0;
+      }
     }
   }
 
@@ -37,7 +44,7 @@ export class Logic {
       const other = entities.find(entity.hits, entity);
 
       if (other) {
-        this.collision.onCollide(game, entity, other);
+        this.collision.onCollide(game, this.scoreSystem, entity, other);
       }
     }
   }
@@ -52,6 +59,9 @@ export class Logic {
     ctx.strokeText(`Ammo:`, 10, 40);
     ctx.fillStyle = 'white';
     ctx.fillRect(50, 32, 100 / gun.maxAmmo * gun.ammo, 10);
+
+    const score = Math.floor(this.scoreSystem.getScore(game.player));
+    ctx.strokeText(`Score: ${score}`, 170, 20);
   }
 }
 
