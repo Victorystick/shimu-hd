@@ -4,12 +4,12 @@ import {CollisionRules} from './collision/CollisionRules.js';
 import {Modern} from './collision/modern.js';
 
 export class Logic {
-  constructor() {
+  constructor(ruleset) {
     this.running = true;
     this.level = 0;
     this.timeSinceSpawn = 0;
     this.collision = new CollisionRules();
-    Modern.initialize(this.collision);
+    ruleset.initialize(this.collision);
   }
 
   initialize(game) {

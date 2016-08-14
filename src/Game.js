@@ -40,7 +40,6 @@ export class Game {
 
   tick(delta) {
     this.update(delta);
-    this.logic.checkCollisions(this, this.entities);
     this.render();
 
     if (this.logic.continue()) {
@@ -53,6 +52,7 @@ export class Game {
       this.entities[i].update(this, delta);
     }
 
+    this.logic.checkCollisions(this, this.entities);
     removeElementsInSet(this.entities, this.removeSet);
     this.removeSet.clear();
 

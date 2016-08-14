@@ -13,7 +13,7 @@ export class CollisionRules {
   }
 
   onCollide(game, entity1, entity2) {
-    for (var fn of this.collisions) {
+    for (const fn of this.collisions) {
       if (fn(game, entity1, entity2)) continue;
       return;
     }

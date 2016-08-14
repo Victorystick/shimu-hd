@@ -50,6 +50,18 @@ describe('CollisionRules', () => {
       
       col.onCollide(null, bullet, enemy);
       assert.equal(call.times, 1);
-    })
+    });
+
+    it ('does not call anything when there is no match', () => {
+      const col = new CollisionRules();
+      const bullet = new Bullet(new Vec2(0,0), new Vec2(0,0), null);
+      const call = new createArgSaver(true);
+      col.add(Bullet, Enemy, call);
+      col.add(PlasmaBullet, Enemy, call);
+      col.add(PlasmaBullet, Bullet, call);
+
+      col.onCollide(null, bullet, bullet);
+      assert.equal(call.times, 0);
+    });
   });
 });
