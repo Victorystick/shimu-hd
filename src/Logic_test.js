@@ -8,9 +8,12 @@ import {Enemy} from './entities/all.js';
 
 describe('Logic', () => {
   const context = new Context(new Size(300, 100));
+  const ruleset = {
+    initialize: (rules) => {}
+  }
 
   it('initializes a Game with initial enemies', () => {
-    const logic = new Logic();
+    const logic = new Logic(ruleset);
     assert.equal(logic.level, 0);
 
     const scoreSystem = new ScoreSystem();
@@ -24,7 +27,7 @@ describe('Logic', () => {
   });
 
   it('updates the Game state with more enemies if required', () => {
-    const logic = new Logic();
+    const logic = new Logic(ruleset);
     const controls = new Controls();
 
     const scoreSystem = new ScoreSystem();

@@ -69,16 +69,6 @@ describe('PlasmaBullet', () => {
     assert(bullet.heat > 0, 'initial heat should be positive');
   });
 
-  it('loses heat on collison', () => {
-    const game = new Game(new Context(new Size(0, 0)), null, null, null, new ScoreSystem());
-    const bullet = new PlasmaBullet(position, direction, null);
-    const enemy = Enemy.standard(position, 0);
-
-    const oldHeat = bullet.heat;
-    bullet.onCollision(game, enemy);
-    assert(bullet.heat < oldHeat, 'heat should decrease');
-  });
-
   it('loses heat over time', () => {
     const game = new Game(new Context(new Size(0, 0)), null, null, null, new ScoreSystem());
     const bullet = new PlasmaBullet(position, direction, null);

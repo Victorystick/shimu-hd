@@ -58,6 +58,7 @@ export class Game {
       this.entities[i].update(this, delta);
     }
 
+    this.logic.checkCollisions(this, this.entities);
     removeElementsInSet(this.entities, this.removeSet);
     this.removeSet.clear();
 

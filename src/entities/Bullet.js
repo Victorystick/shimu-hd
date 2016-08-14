@@ -15,30 +15,10 @@ export class Bullet extends Entity {
   update(game, delta) {
     this.position.add(this.direction.setLength(delta * this.speed));
 
-    // Check to see if the bullet hits any other entity.
-    const other = game.entities.find(this.hits, this);
-
-    // If it does, remove both.
-    if (other) {
-      if (this.onCollision(game, other)) {
-        return;
-      }
-    }
-
     if (!game.getBoard().intersects(this)) {
       game.remove(this);
     }
   }
-
-  onCollision(game, other) {
-    if (other instanceof Enemy) {
-      game.remove(other);
-      game.getScoreSystem().onEnemyKilled(this.owner, other);
-    }
-    game.remove(this);
-    return true;
-  }
-
 
   // A bullet is assumed to hit an entity, if it isn't the bullet itself nor
   // its owner and the two intersect each other.
@@ -80,19 +60,6 @@ export class PlasmaBullet extends Bullet {
     if (entity instanceof PlasmaBullet) return false;
 
     return super.hits(entity);
-  }
-
-  onCollision(game, other) {
-    if (other.hp) {
-      this.heat -= other.hp*9;
-    } else {
-      this.heat -= 10;
-    }
-    if (other instanceof Enemy) {
-      game.remove(other);
-      game.getScoreSystem().onEnemyKilled(this.owner, other);
-    }
-    return this.checkHeat(game);
   }
 
   checkHeat(game) {
