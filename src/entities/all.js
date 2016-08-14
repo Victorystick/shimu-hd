@@ -4,7 +4,7 @@
 //     import {EntityA, EntityB} from './entitites/all.js';
 
 export {ArmedEntity} from './ArmedEntity.js';
-export {Bullet} from './Bullet.js';
+export {Bullet, LineBullet, PlasmaBullet} from './Bullet.js';
 export {Enemy} from './Enemy.js';
 export {Entity} from './Entity.js';
 export {Shimu} from './Shimu.js';

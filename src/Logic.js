@@ -1,11 +1,15 @@
 import {Vec2} from './core.js';
 import {Enemy} from './entities/all.js';
+import {CollisionRules} from './collision/CollisionRules.js';
+import {Modern} from './collision/modern.js';
 
 export class Logic {
-  constructor() {
+  constructor(ruleset) {
     this.running = true;
     this.level = 0;
     this.timeSinceSpawn = 0;
+    this.collision = new CollisionRules();
+    ruleset.initialize(this.collision);
   }
 
   initialize(game) {
@@ -24,6 +28,19 @@ export class Logic {
       this.timeSinceSpawn -= 15000;
       if (this.timeSinceSpawn < 0) {
         this.timeSinceSpawn = 0;
+      }
+    }
+  }
+
+  checkCollisions(game, entities) {
+    for (const entity of entities) {
+      if (!entity.hits) {
+        continue;
+      }
+      const other = entities.find(entity.hits, entity);
+
+      if (other) {
+        this.collision.onCollide(game, entity, other);
       }
     }
   }

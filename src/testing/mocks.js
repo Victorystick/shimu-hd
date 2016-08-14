@@ -1,10 +1,13 @@
 import assert from 'assert';
 
 export function createArgSaver(returnValue) {
-  return function saver(...args) {
+  function saver(...args) {
     saver.args = args;
+    saver.times++;
     return returnValue;
   }
+  saver.times = 0;
+  return saver;
 }
 
 export class Mock {

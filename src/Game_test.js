@@ -61,7 +61,8 @@ describe('Game', () => {
 
   it('update', () => {
     const logic = {
-      update: createArgSaver()
+      update: createArgSaver(),
+      checkCollisions: createArgSaver()
     };
 
     const game = new Game(fakeContext, logic, null, null);
@@ -69,16 +70,19 @@ describe('Game', () => {
     // Assume 13ms has passed.
     game.update(13);
 
-    // `logic.update` should be called with the game instance.
+    // `logic.update` and `logic.checkCollisions` 
+    // should be called with the game instance.
     assert.deepEqual(logic.update.args, [game, 13]);
+    assert.deepEqual(logic.checkCollisions.args, [game, [] ])
   });
 
   describe('tick', () => {
-    it('calls update and render', () => {
+    it('calls update, checkCollisions and render', () => {
       const logic = {
         continue: createArgSaver(false),
         draw: createArgSaver(),
-        update: createArgSaver()
+        update: createArgSaver(),
+        checkCollisions: createArgSaver()
       };
 
       const game = new Game(fakeContext, logic, null, null);
@@ -93,7 +97,8 @@ describe('Game', () => {
       const logic = {
         continue: createArgSaver(true),
         draw: createArgSaver(),
-        update: createArgSaver()
+        update: createArgSaver(),
+        checkCollisions: createArgSaver()
       };
 
       const framer = createArgSaver();
