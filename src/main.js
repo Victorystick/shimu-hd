@@ -7,10 +7,9 @@ import {createAnimationTicker} from './tickers.js';
 
 export default {
   start(canvas) {
-    const logic = new Logic(Modern);
+    const logic = new Logic(Modern.initialize(), new ScoreSystem());
     const ctrl = new controls.Keyboard(canvas);
-    const scoring = new ScoreSystem();
     const ticker = createAnimationTicker();
-    new Game(canvas.getContext('2d'), logic, ctrl, ticker, scoring).start();
+    new Game(canvas.getContext('2d'), logic, ctrl, ticker).start();
   },
 };

@@ -3,7 +3,6 @@ import {Size} from './core.js';
 import {Context} from './testing/fakes.js';
 import {createArgSaver} from './testing/mocks.js';
 import {Game, removeElementsInSet} from './Game.js';
-import {ScoreSystem} from './ScoreSystem.js';
 
 describe('removeElementsInSet', () => {
   it('does nothing for the empty set', () => {
@@ -42,7 +41,7 @@ describe('Game', () => {
       initialize: createArgSaver()
     };
 
-    const game = new Game(fakeContext, logic, null, null, new ScoreSystem());
+    const game = new Game(fakeContext, logic, null, null);
     game.initialize();
 
     // Assume the player character is the only entity.
@@ -54,7 +53,7 @@ describe('Game', () => {
 
   it('start', () => {
     const framer = createArgSaver();
-    const game = new Game(fakeContext, { initialize() {} }, null, framer, new ScoreSystem());
+    const game = new Game(fakeContext, { initialize() {} }, null, framer);
 
     assert.equal(game.start(), game);
     assert.deepEqual(framer.args, [game.tick, game]);
@@ -66,12 +65,12 @@ describe('Game', () => {
       checkCollisions: createArgSaver()
     };
 
-    const game = new Game(fakeContext, logic, null, null, null);
+    const game = new Game(fakeContext, logic, null, null);
 
     // Assume 13ms has passed.
     game.update(13);
 
-    // `logic.update` and `logic.checkCollisions` 
+    // `logic.update` and `logic.checkCollisions`
     // should be called with the game instance.
     assert.deepEqual(logic.update.args, [game, 13]);
     assert.deepEqual(logic.checkCollisions.args, [game, [] ])
@@ -86,7 +85,7 @@ describe('Game', () => {
         checkCollisions: createArgSaver()
       };
 
-      const game = new Game(fakeContext, logic, null, null, null);
+      const game = new Game(fakeContext, logic, null, null);
       game.tick(10);
 
       assert.deepEqual(logic.update.args, [game, 10]);
@@ -104,7 +103,7 @@ describe('Game', () => {
 
       const framer = createArgSaver();
 
-      const game = new Game(fakeContext, logic, null, framer, null);
+      const game = new Game(fakeContext, logic, null, framer);
       game.tick(10);
 
       assert.deepEqual(logic.update.args, [game, 10]);

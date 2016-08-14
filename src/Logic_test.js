@@ -7,19 +7,16 @@ import {Enemy} from './entities/all.js';
 
 describe('Logic', () => {
   const context = new Context(new Size(300, 100));
-  const ruleset = {
-    initialize: (rules) => {}
-  }
   const scoresystem = {
     initialize: (player) => {},
     onLevelChange: (player, level, timeleft) => {}
-  }
+  };
 
   it('initializes a Game with initial enemies', () => {
-    const logic = new Logic(ruleset);
+    const logic = new Logic(null, scoresystem);
     assert.equal(logic.level, 0);
 
-    const game = new Game(context, logic, null, null, scoresystem);
+    const game = new Game(context, logic, null, null);
 
     game.initialize();
     assert.equal(logic.level, 1);
@@ -29,10 +26,10 @@ describe('Logic', () => {
   });
 
   it('updates the Game state with more enemies if required', () => {
-    const logic = new Logic(ruleset);
+    const logic = new Logic(null, scoresystem);
     const controls = new Controls();
 
-    const game = new Game(context, logic, controls, null, scoresystem);
+    const game = new Game(context, logic, controls, null);
     game.initialize();
 
     const entities = game.entities.length;
