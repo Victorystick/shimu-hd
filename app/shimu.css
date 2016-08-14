@@ -4,4 +4,6 @@ body {
 
 canvas.shimu-game {
   background: #222;
+  display: block;
+  margin: 0 auto;
 }
