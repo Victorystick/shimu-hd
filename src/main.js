@@ -5,7 +5,8 @@ import * as controls from './controls.js';
 import {createAnimationTicker} from './tickers.js';
 
 function getControls() {
-  return 'ontouchend' in window ? controls.Touch : controls.Keyboard;
+  return 'ontouchend' in window && confirm('Do you want touch controls?') ?
+    controls.Touch : controls.Keyboard;
 }
 
 export default {
