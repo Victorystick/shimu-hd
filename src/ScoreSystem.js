@@ -9,9 +9,7 @@ export class ScoreSystem {
   }
 
   getScore(player) {
-    if (player) {
       return this.scores.get(player);
-    }
   }
 
   setScore(player, score) {
