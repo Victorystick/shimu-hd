@@ -1,27 +1,34 @@
 
 export class ScoreSystem {
-	constructor() {
+  constructor() {
+    this.scores = new Map();
   }
 
-	initialize(player) {
-		player.score = 0;
-	}
+  initialize(player) {
+    this.setScore(player, 0)
+  }
 
-	getScore(player) {
-		return player.score;
-	}
+  getScore(player) {
+    if (player) {
+      return this.scores.get(player);
+    }
+  }
 
-	updateScore(player, dscore) {
-		if (player != null) {
-			player.score += dscore;
-		}
-	}
+  setScore(player, score) {
+    if (player) {
+      this.scores.set(player, score);
+    }
+  }
 
-	onLevelChange(player, level, timeleft) {
-		this.updateScore(player, (timeleft+2000) / 10);
-	}
+  updateScore(player, dscore) {
+    return this.setScore(player, this.getScore(player)+dscore);
+  }
 
-	onEnemyKilled(player, enemy) {
-		this.updateScore(player, 10);
-	}
+  onLevelChange(player, level, timeleft) {
+    this.updateScore(player, (timeleft+2000) / 10);
+  }
+
+  onEnemyKilled(player, enemy) {
+    this.updateScore(player, 10);
+  }
 }

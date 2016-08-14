@@ -9,20 +9,20 @@ describe('ScoreSystem', () => {
 		it('Sets a players score to 0.', () => {
 			const player = new Shimu(new Vec2(0,0), null);
 			scoreSystem.initialize(player);
-			assert.equal(0, player.score);
+			assert.equal(scoreSystem.getScore(player), 0);
 		});
 	});
 
 	describe('getScore', () => {
 		it('returns the current score of the player', () => {
 			const player = new Shimu(new Vec2(0,0), null);
-			player.score = 1337;
+			scoreSystem.setScore(player, 1337);
 			assert.equal(scoreSystem.getScore(player), 1337);
 
-			player.score = 800;
+			scoreSystem.setScore(player, 800);
 			assert.equal(scoreSystem.getScore(player), 800);
 
-			player.score = 8001;
+			scoreSystem.setScore(player, 8001);
 			assert.equal(scoreSystem.getScore(player), 8001);
 		});
 	});
@@ -32,18 +32,18 @@ describe('ScoreSystem', () => {
 			const player = new Shimu(new Vec2(0,0), null);
 			scoreSystem.initialize(player);
 			scoreSystem.updateScore(player, 500);
-			assert.equal(player.score, 500);
+			assert.equal(scoreSystem.getScore(player), 500);
 			scoreSystem.updateScore(player, 10);
-			assert.equal(player.score, 510);
+			assert.equal(scoreSystem.getScore(player), 510);
 		});
 
 		it('decrease score with negative argument', () => {
 			const player = new Shimu(new Vec2(0,0), null);
 			scoreSystem.initialize(player);
 			scoreSystem.updateScore(player, -500);
-			assert.equal(player.score, -500);
+			assert.equal(scoreSystem.getScore(player), -500);
 			scoreSystem.updateScore(player, -10);
-			assert.equal(player.score, -510);
+			assert.equal(scoreSystem.getScore(player), -510);
 		});
 	});
 });
