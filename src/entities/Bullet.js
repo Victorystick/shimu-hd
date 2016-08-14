@@ -1,6 +1,5 @@
 import {Size} from '../core.js';
 import {Entity} from './Entity.js';
-import {Enemy} from './Enemy.js';
 
 const size = new Size(2, 2);
 
