@@ -8,6 +8,7 @@ export class Vec2 {
   copy(other) {
     this.x = other.x;
     this.y = other.y;
+    return this;
   }
 
   clone() {

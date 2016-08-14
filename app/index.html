@@ -2,14 +2,17 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Shimu HD</title>
     <link rel="stylesheet" href="shimu.css" media="screen" charset="utf-8">
   </head>
   <body>
-    <canvas class="shimu-game" width="600" height="400" tabindex="0"></canvas>
+    <canvas class="shimu-game" width="500" height="300" tabindex="0"></canvas>
     <script src="./shimu.js" charset="utf-8"></script>
     <script>
-      Shimu.start(document.body.querySelector('.shimu-game'));
+      const canvas = document.body.querySelector('.shimu-game');
+      canvas.focus();
+      Shimu.start(canvas);
     </script>
   </body>
 </html>
