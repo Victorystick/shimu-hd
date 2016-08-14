@@ -74,17 +74,19 @@ describe('Game', () => {
   });
 
   describe('tick', () => {
-    it('calls update and render', () => {
+    it('calls update, checkCollisions and render', () => {
       const logic = {
         continue: createArgSaver(false),
         draw: createArgSaver(),
-        update: createArgSaver()
+        update: createArgSaver(),
+        checkCollisions: createArgSaver()
       };
 
       const game = new Game(fakeContext, logic, null, null);
       game.tick(10);
 
       assert.deepEqual(logic.update.args, [game, 10]);
+      assert.deepEqual(logic.checkCollisions.args, [game, [] ])
       assert.deepEqual(logic.draw.args, [game, game.ctx]);
       assert.deepEqual(logic.continue.args, []);
     });
@@ -93,7 +95,8 @@ describe('Game', () => {
       const logic = {
         continue: createArgSaver(true),
         draw: createArgSaver(),
-        update: createArgSaver()
+        update: createArgSaver(),
+        checkCollisions: createArgSaver()
       };
 
       const framer = createArgSaver();

@@ -40,6 +40,7 @@ export class Game {
 
   tick(delta) {
     this.update(delta);
+    this.logic.checkCollisions(this, this.entities);
     this.render();
 
     if (this.logic.continue()) {

@@ -29,6 +29,19 @@ export class Logic {
     }
   }
 
+  checkCollisions(game, entities) {
+    for (const entity of entities) {
+      if (!entity.hits) {
+        continue;
+      }
+      const other = entities.find(entity.hits, entity);
+
+      if (other) {
+        this.collision.onCollide(game, entity, other);
+      }
+    }
+  }
+
   draw(game, ctx) {
     // TODO(victorystick): should clean this up
     ctx.font = '14px';
