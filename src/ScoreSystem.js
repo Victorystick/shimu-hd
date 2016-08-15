@@ -1,7 +1,10 @@
-
 export class ScoreSystem {
   constructor() {
     this.scores = new Map();
+  }
+
+  static standard() {
+    return new ScoreSystem();
   }
 
   initialize(player) {
