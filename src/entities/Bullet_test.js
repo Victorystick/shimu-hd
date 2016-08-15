@@ -1,6 +1,5 @@
 import assert from 'assert';
 import {Bullet, PlasmaBullet} from './Bullet.js';
-import {Enemy} from './Enemy.js';
 import {Vec2, Size} from '../core.js';
 import {Context} from '../testing/fakes.js';
 import {Game} from '../Game.js';
@@ -69,7 +68,7 @@ describe('PlasmaBullet', () => {
   });
 
   it('loses heat over time', () => {
-    const game = new Game(new Context(new Size(0, 0)), null, null, null);
+    const game = new Game(new Context(new Size(0, 0)), null, null, null, null);
     const bullet = new PlasmaBullet(position, direction, null);
     const oldHeat = bullet.heat;
 
@@ -79,7 +78,7 @@ describe('PlasmaBullet', () => {
 
   it('is removed when out of heat', () => {
     const bullet = new PlasmaBullet(position, direction, null);
-    const game = new Game(new Context(new Size(0, 0)), null, null, null);
+    const game = new Game(new Context(new Size(0, 0)), null, null, null, null);
 
     bullet.heat = 0;
     bullet.update(game, 0);

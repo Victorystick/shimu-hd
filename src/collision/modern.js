@@ -13,12 +13,14 @@ export class Modern {
     } else {
       bullet.heat -= 10;
     }
+    game.getScoreSystem().onEnemyKilled(bullet.owner, enemy);
     game.remove(enemy);
     bullet.checkHeat(game);
     return false;
   }
 
   static BulletHitsEnemy(game, bullet, enemy) {
+    game.getScoreSystem().onEnemyKilled(bullet.owner, enemy);
     game.remove(enemy);
     game.remove(bullet);
     return false;

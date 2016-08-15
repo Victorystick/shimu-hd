@@ -10,12 +10,16 @@ describe('Logic', () => {
   const ruleset = {
     initialize: (rules) => {}
   }
+  const scoresystem = {
+    initialize: (player) => {},
+    onLevelChange: (player, level, timeleft) => {}
+  }
 
   it('initializes a Game with initial enemies', () => {
     const logic = new Logic(ruleset);
     assert.equal(logic.level, 0);
 
-    const game = new Game(context, logic, null, null);
+    const game = new Game(context, logic, null, null, scoresystem);
 
     game.initialize();
     assert.equal(logic.level, 1);
@@ -28,7 +32,7 @@ describe('Logic', () => {
     const logic = new Logic(ruleset);
     const controls = new Controls();
 
-    const game = new Game(context, logic, controls, null);
+    const game = new Game(context, logic, controls, null, scoresystem);
     game.initialize();
 
     const entities = game.entities.length;

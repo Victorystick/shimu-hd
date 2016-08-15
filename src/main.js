@@ -1,6 +1,8 @@
+import {Injected} from './injecter.js';
 import {Game} from './Game.js';
 import {Modern} from './collision/modern.js';
 import {Logic} from './Logic.js';
+//import {ScoreSystem} from './ScoreSystem.js';
 import * as controls from './controls.js';
 import {createAnimationTicker} from './tickers.js';
 
@@ -12,7 +14,6 @@ function getControls() {
 export default {
   start(canvas) {
     const Controls = getControls();
-
     const logic = new Logic(Modern);
     const ctrl = new Controls(canvas);
     const ticker = createAnimationTicker();
