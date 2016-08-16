@@ -21,11 +21,13 @@ export class Logic {
   }
 
   update(game, delta) {
-    this.timeSinceSpawn += delta;
+    const timeToSpawn = 15000
+    
+    this.timeSinceSpawn += Math.min(delta, timeToSpawn);
 
-    if (this.timeSinceSpawn >= 15000 || game.entities.filter(e => e instanceof Enemy).length < 10) {
+    if (this.timeSinceSpawn >= timeToSpawn || game.entities.filter(e => e instanceof Enemy).length < 10) {
       spawnEnemies(game, this.level++);
-      this.timeSinceSpawn -= 15000;
+      this.timeSinceSpawn -= timeToSpawn;
       if (this.timeSinceSpawn < 0) {
         this.timeSinceSpawn = 0;
       }
