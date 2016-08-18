@@ -44,9 +44,6 @@ describe('Game', () => {
     const game = new Game(fakeContext, logic, null, null);
     game.initialize();
 
-    // Assume the player character is the only entity.
-    assert.deepEqual(game.entities, [game.player]);
-
     // `logic.initialize` should be called with the game instance.
     assert.deepEqual(logic.initialize.args, [game]);
   });
