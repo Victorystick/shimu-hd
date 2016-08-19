@@ -1,5 +1,5 @@
 import {Keyboard} from './controls.js';
-import {Entity, Shimu} from './entities/all.js';
+import {Entity} from './entities/all.js';
 import {Size, Vec2} from './core.js';
 
 export class Game {
@@ -32,9 +32,6 @@ export class Game {
   }
 
   initialize() {
-    this.player = new Shimu(new Vec2(50, 50), this.controls);
-    this.entities.push(this.player);
-
     this.logic.initialize(this);
   }
 
