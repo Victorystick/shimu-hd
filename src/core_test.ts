@@ -1,5 +1,5 @@
-import assert from 'assert';
-import {Vec2} from './core.js';
+import * as assert from 'assert';
+import {Vec2} from './core';
 
 describe('Vec2', () => {
   it('length', () => {

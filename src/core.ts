@@ -1,8 +1,8 @@
 
 export class Vec2 {
-  constructor(x, y) {
-    this.x = x;
-    this.y = y;
+  static ZERO : Vec2 = Object.freeze(new Vec2(0, 0));
+
+  constructor(public x: number, public y: number) {
   }
 
   copy(other) {
@@ -64,12 +64,8 @@ export class Vec2 {
   }
 }
 
-Vec2.ZERO = Object.freeze(new Vec2(0, 0));
-
 export class Size {
-  constructor(width, height) {
-    this.width = width;
-    this.height = height;
+  constructor(public width: number, public height: number) {
   }
 
   static from(other) {
