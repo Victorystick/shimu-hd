@@ -1,10 +1,10 @@
-import assert from 'assert';
-import {createArgSaver} from '../testing/mocks.js';
-import {Context} from '../testing/fakes.js';
-import {Vec2, Size} from '../core.js';
-import {Game} from '../Game.js';
-import {Enemy} from '../entities/all.js';
-import {LegacySpawner} from './LegacySpawner.js';
+import * as assert from 'assert';
+import {createArgSaver} from '../testing/mocks';
+import {Context} from '../testing/fakes';
+import {Vec2, Size} from '../core';
+import {Game} from '../Game';
+import {Entity,Enemy} from '../entities/all';
+import {LegacySpawner} from './LegacySpawner';
 
 describe('LegacySpawner', () => {
 	const context = new Context(new Size(300, 100));
@@ -21,9 +21,7 @@ describe('LegacySpawner', () => {
 	it('spawns more enemies', () => {
 		const spawner = new LegacySpawner();
 		const game = new Game(context, null, null, null);
-		game.player = {
-			position: new Vec2(4, 10)
-		}
+		game.player = new Entity(new Vec2(4, 10), new Size(2,2));
 		spawner.spawn(game, 3);
 
 		assert.equal(game.entities.filter(e => e instanceof Enemy).length, 30);

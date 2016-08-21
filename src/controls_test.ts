@@ -1,5 +1,5 @@
-import assert from 'assert';
-import {Keyboard} from './controls.js';
+import * as assert from 'assert';
+import {Keyboard} from './controls';
 
 describe('Keyboard', () => {
   it('listens for events', () => {
@@ -8,7 +8,7 @@ describe('Keyboard', () => {
     const element = {
       addEventListener(type, eventHandler) {
         types.push(type);
-        assert(eventHandler instanceof Keyboard, 'should call with instance');
+        assert.ok(eventHandler instanceof Keyboard, 'should call with instance');
       }
     };
 

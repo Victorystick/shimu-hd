@@ -1,4 +1,16 @@
+import {Game} from '../game';
+import {Entity} from '../entities/entity';
+
+interface CollisionFunction {
+  (game: Game, entity1: Entity, entity2: Entity): boolean;
+}
+
+export interface RulesSet {
+  initialize(rules: CollisionRules);
+}
+
 export class CollisionRules {
+  public collisions: Array<CollisionFunction>;
   constructor() {
     this.collisions = new Array();
   }

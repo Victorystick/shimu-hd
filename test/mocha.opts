@@ -1,2 +1,4 @@
 --require reify
-src/**/*_test.js
+--require ts-node/register 
+--watch-extensions tsx,ts 
+src/**/*_test.ts

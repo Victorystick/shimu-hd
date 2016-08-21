@@ -1,9 +1,9 @@
-import assert from 'assert';
-import {Bullet, PlasmaBullet} from './Bullet.js';
-import {Enemy} from './Enemy.js';
-import {Vec2, Size} from '../core.js';
-import {Context} from '../testing/fakes.js';
-import {Game} from '../Game.js';
+import * as assert from 'assert';
+import {Bullet, PlasmaBullet} from './Bullet';
+import {Enemy} from './Enemy';
+import {Vec2, Size} from '../core';
+import {Context} from '../testing/fakes';
+import {Game} from '../Game';
 
 describe('Bullet', () => {
   const direction = new Vec2(0, 1);
@@ -24,7 +24,7 @@ describe('Bullet', () => {
     bullet.update(game, 10);
 
     assert.deepEqual(bullet.position, new Vec2(10, 12));
-    assert.equal(game.entityToRemove, null);
+    assert.equal(game.removeSet.size, 0);
   });
 
   it('is removed when moving outside the board', () => {
@@ -33,7 +33,7 @@ describe('Bullet', () => {
     const game = new Game(new Context(new Size(0, 0)), null, null, null);
 
     bullet.update(game, 10);
-    assert(game.removeSet.has(bullet), 'bullet should be in removeSet');
+    assert.ok(game.removeSet.has(bullet), 'bullet should be in removeSet');
   });
 
   describe('hit', () => {
@@ -41,15 +41,15 @@ describe('Bullet', () => {
     const bullet = new Bullet(Vec2.ZERO, Vec2.ZERO, ownerBullet);
 
     it('cannot hit itself', () => {
-      assert(!bullet.hits(bullet));
+      assert.ok(!bullet.hits(bullet));
     });
 
     it('cannot hit its owner', () => {
-      assert(!bullet.hits(ownerBullet));
+      assert.ok(!bullet.hits(ownerBullet));
     });
 
     it('can hit anything else', () => {
-      assert(ownerBullet.hits(bullet));
+      assert.ok(ownerBullet.hits(bullet));
     });
   });
 });
@@ -65,7 +65,7 @@ describe('PlasmaBullet', () => {
 
   it('has heat', () => {
     const bullet = new PlasmaBullet(position, direction, null);
-    assert(bullet.heat > 0, 'initial heat should be positive');
+    assert.ok(bullet.heat > 0, 'initial heat should be positive');
   });
 
   it('loses heat over time', () => {
@@ -74,7 +74,7 @@ describe('PlasmaBullet', () => {
     const oldHeat = bullet.heat;
 
     bullet.update(game, 3);
-    assert(bullet.heat < oldHeat, 'heat should decrease');
+    assert.ok(bullet.heat < oldHeat, 'heat should decrease');
   });
 
   it('is removed when out of heat', () => {
@@ -83,6 +83,6 @@ describe('PlasmaBullet', () => {
 
     bullet.heat = 0;
     bullet.update(game, 0);
-    assert(game.removeSet.has(bullet), 'bullet should be in removeSet');
+    assert.ok(game.removeSet.has(bullet), 'bullet should be in removeSet');
   });
 });

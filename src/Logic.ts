@@ -1,10 +1,17 @@
-import {Vec2} from './core.js';
-import {Enemy} from './entities/all.js';
-import {CollisionRules} from './collision/CollisionRules.js';
-import {Modern} from './collision/modern.js';
+import {Vec2} from './core';
+import {Spawner} from './spawning/Spawner'
+import {Enemy} from './entities/all';
+import {CollisionRules, RulesSet} from './collision/CollisionRules';
+import {Modern} from './collision/modern';
 
 export class Logic {
-  constructor(ruleset, spawner) {
+  private running: boolean;
+  public level: number;
+  private timeSinceSpawn: number;
+  private collision: CollisionRules;
+  private spawner: Spawner;
+
+  constructor(ruleset: RulesSet, spawner: Spawner) {
     this.running = true;
     this.level = 0;
     this.timeSinceSpawn = 0;

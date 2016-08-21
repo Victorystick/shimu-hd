@@ -1,15 +1,20 @@
-export {Touch} from './controls/Touch.js';
-import {Vec2} from './core.js';
+export {Touch} from './controls/Touch';
+import {Vec2} from './core';
+import {Entity} from './entities/all'
 
-/*
-interface EntityControls {
+export interface EntityControls {
   getFaceDirection(entity: Entity): Vec2;
   getMoveDirection(): Vec2;
   attemptsPrimaryAction(): boolean;
 }
-*/
+
 
 export class Keyboard {
+  private element;
+  private mousePosition: Vec2;
+  private buttons: number;
+  private keyMap;
+
   constructor(element) {
     this.element = element;
 

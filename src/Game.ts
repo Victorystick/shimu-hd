@@ -1,8 +1,17 @@
-import {Keyboard} from './controls.js';
-import {Entity} from './entities/all.js';
-import {Size, Vec2} from './core.js';
+import {EntityControls} from './controls';
+import {Entity} from './entities/all';
+import {Size, Vec2} from './core';
 
 export class Game {
+  public ctx: any;
+  private logic: any;
+  private controls: EntityControls;
+  private nextFrame: Function;
+  private board: Entity;
+  public player: Entity;
+  public entities: Entity[];
+  public removeSet: Set<Entity>;
+
   constructor(context, logic, controls, nextFrame) {
     this.ctx = context;
     this.logic = logic;

@@ -1,5 +1,5 @@
-import {CollisionRules} from './CollisionRules.js';
-import {Shimu, Bullet, PlasmaBullet, Enemy} from '../entities/all.js';
+import {CollisionRules} from './CollisionRules';
+import {Shimu, Bullet, PlasmaBullet, Enemy} from '../entities/all';
 
 export class Modern {
   static initialize(rules) {

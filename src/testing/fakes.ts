@@ -1,7 +1,9 @@
-import {Vec2} from '../core.js';
+import {Vec2, Size} from '../core';
 
 export class Context {
-  constructor(size) {
+  public canvas : Size;
+
+  constructor(size : Size) {
     this.canvas = size;
   }
 
@@ -9,6 +11,10 @@ export class Context {
 }
 
 export class Controls {
+  public move: Vec2;
+  public face: Vec2;
+  public primary: boolean;
+  
   constructor() {
     this.move = Vec2.ZERO;
     this.face = Vec2.ZERO;

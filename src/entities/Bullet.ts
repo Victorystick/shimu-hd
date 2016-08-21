@@ -1,10 +1,14 @@
-import {Size} from '../core.js';
-import {Entity} from './Entity.js';
+import {Vec2, Size} from '../core';
+import {Entity} from './Entity';
 
 const size = new Size(2, 2);
 
 export class Bullet extends Entity {
-  constructor(position, direction, owner) {
+  public direction: Vec2;
+  public speed: number;
+  public owner: Entity;
+
+  constructor(position: Vec2, direction: Vec2, owner: Entity) {
     super(position, size, 'white');
     this.direction = direction;
     this.speed = direction.length();
@@ -41,6 +45,7 @@ export class LineBullet extends Bullet {
 }
 
 export class PlasmaBullet extends Bullet {
+  public heat: number;
   constructor(position, direction, owner) {
     super(position, direction, owner)
     this.heat = 900;

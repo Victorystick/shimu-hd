@@ -1,16 +1,25 @@
-import assert from 'assert';
+import * as assert from 'assert';
 
-export function createArgSaver(returnValue) {
-  function saver(...args) {
+export interface ArgSaver {
+  (...args: Array<any>) : any;
+  times: number;
+  args: Array<any>;
+}
+
+export function createArgSaver(returnValue?) {
+  var saver = <ArgSaver>function(...args) {
     saver.args = args;
     saver.times++;
     return returnValue;
   }
   saver.times = 0;
+  saver.args = [];
+  
   return saver;
 }
 
 export class Mock {
+  private mocks;
   constructor() {
     this.mocks = [];
   }

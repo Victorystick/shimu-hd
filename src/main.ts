@@ -1,9 +1,9 @@
-import {Game} from './Game.js';
-import {Modern} from './collision/modern.js';
-import {LegacySpawner} from './spawning/LegacySpawner.js';
-import {Logic} from './Logic.js';
-import * as controls from './controls.js';
-import {createAnimationTicker} from './tickers.js';
+import {Game} from './Game.ts';
+import {Modern} from './collision/modern.ts';
+import {LegacySpawner} from './spawning/LegacySpawner.ts';
+import {Logic} from './Logic.ts';
+import * as controls from './controls.ts';
+import {createAnimationTicker} from './tickers.ts';
 
 function getControls() {
   return 'ontouchend' in window && confirm('Do you want touch controls?') ?

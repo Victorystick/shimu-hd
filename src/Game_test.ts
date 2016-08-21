@@ -1,8 +1,8 @@
-import assert from 'assert';
-import {Size} from './core.js';
-import {Context} from './testing/fakes.js';
-import {createArgSaver} from './testing/mocks.js';
-import {Game, removeElementsInSet} from './Game.js';
+import * as assert from 'assert';
+import {Size} from './core';
+import {Context} from './testing/fakes';
+import {createArgSaver} from './testing/mocks';
+import {Game, removeElementsInSet} from './Game';
 
 describe('removeElementsInSet', () => {
   it('does nothing for the empty set', () => {

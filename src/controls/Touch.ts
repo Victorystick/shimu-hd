@@ -1,6 +1,9 @@
-import {Vec2} from '../core.js';
+import {Vec2} from '../core';
 
 class TouchStick {
+  private vec: Vec2;
+  private origo: Vec2;
+  private id: number;
   constructor() {
     this.vec = new Vec2(0, 0);
     this.origo = new Vec2(0, 0);
@@ -36,6 +39,9 @@ class TouchStick {
 
 // A set of touch controls that listens to touch events.
 export class Touch {
+  private element;
+  private left: TouchStick;
+  private right: TouchStick;
   constructor(element) {
     this.element = element;
 

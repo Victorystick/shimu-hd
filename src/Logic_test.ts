@@ -1,10 +1,10 @@
-import assert from 'assert';
-import {Context, Controls} from './testing/fakes.js';
-import {createArgSaver} from './testing/mocks.js';
-import {Game} from './Game.js';
-import {Logic} from './Logic.js';
-import {Size} from './core.js';
-import {Enemy} from './entities/all.js';
+import * as assert from 'assert';
+import {Context, Controls} from './testing/fakes';
+import {createArgSaver} from './testing/mocks';
+import {Game} from './Game';
+import {Logic} from './Logic';
+import {Vec2,Size} from './core';
+import {Enemy} from './entities/all';
 
 describe('Logic', () => {
   const context = new Context(new Size(300, 100));
@@ -14,7 +14,8 @@ describe('Logic', () => {
 
   it('initializes a Game with initial enemies', () => {
     const spawner = {
-      initialize: createArgSaver()
+      initialize: createArgSaver(),
+      spawn: () => {}
     }
     const logic = new Logic(ruleset, spawner);
     assert.equal(logic.level, 0);
@@ -40,7 +41,8 @@ describe('Logic', () => {
     game.initialize();
 
     for (var i = 0; i < 20; i++) {
-      game.entities.push(new Enemy());
+      game.entities.push(new Enemy(new Vec2(4,5), 
+        new Size(3,3), 'yellow', 5, 0));
     }
 
 

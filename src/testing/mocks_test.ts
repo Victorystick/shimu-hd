@@ -1,5 +1,5 @@
-import assert from 'assert';
-import {createArgSaver} from './mocks.js';
+import * as assert from 'assert';
+import {createArgSaver} from './mocks';
 
 describe('createArgSaver', () => {
   it('creates a function that returns the given argument', () => {

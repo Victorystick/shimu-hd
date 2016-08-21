@@ -1,8 +1,8 @@
-import assert from 'assert';
-import {createArgSaver} from '../testing/mocks.js';
-import {CollisionRules} from './CollisionRules.js';
-import {Vec2, Size} from '../core.js';
-import {Enemy, Bullet, PlasmaBullet} from '../entities/all.js';
+import * as assert from 'assert';
+import {createArgSaver} from '../testing/mocks';
+import {CollisionRules} from './CollisionRules';
+import {Vec2, Size} from '../core';
+import {Enemy, Bullet, PlasmaBullet} from '../entities/all';
 
 describe('CollisionRules', () => {
   describe('onCollide', () => {
@@ -11,7 +11,7 @@ describe('CollisionRules', () => {
     it('calls when types are the same', () => {
       const col = new CollisionRules();
       const bullet = new Bullet(new Vec2(0,0), new Vec2(0,0), null);
-      const call = new createArgSaver();
+      const call = createArgSaver();
       col.add(Bullet, Enemy, call);
       
       col.onCollide(null, bullet, enemy);
@@ -22,7 +22,7 @@ describe('CollisionRules', () => {
     it('calls when entity #1 is of a subclass', () => {
       const col = new CollisionRules();
       const bullet = new PlasmaBullet(new Vec2(0,0), new Vec2(0,0), null);
-      const call = new createArgSaver();
+      const call = createArgSaver();
       col.add(Bullet, Enemy, call);
       
       col.onCollide(null, bullet, enemy);
@@ -33,7 +33,7 @@ describe('CollisionRules', () => {
     it('calls when entity #2 is of a subclass', () => {
       const col = new CollisionRules();
       const bullet = new PlasmaBullet(new Vec2(0,0), new Vec2(0,0), null);
-      const call = new createArgSaver();
+      const call = createArgSaver();
       col.add(Enemy, Bullet, call);
       
       col.onCollide(null, enemy, bullet);
@@ -44,7 +44,7 @@ describe('CollisionRules', () => {
     it('stops calling rules when one returns false', () => {
       const col = new CollisionRules();
       const bullet = new PlasmaBullet(new Vec2(0,0), new Vec2(0,0), null);
-      const call = new createArgSaver(false);
+      const call = createArgSaver(false);
       col.add(PlasmaBullet, Enemy, call);
       col.add(Bullet, Enemy, call);
       
@@ -55,7 +55,7 @@ describe('CollisionRules', () => {
     it ('does not call anything when there is no match', () => {
       const col = new CollisionRules();
       const bullet = new Bullet(new Vec2(0,0), new Vec2(0,0), null);
-      const call = new createArgSaver(true);
+      const call = createArgSaver(true);
       col.add(Bullet, Enemy, call);
       col.add(PlasmaBullet, Enemy, call);
       col.add(PlasmaBullet, Bullet, call);

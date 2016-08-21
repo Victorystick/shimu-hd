@@ -1,6 +1,15 @@
+import {Vec2, Size} from "../core";
+
+export interface DirectedEntity extends Entity {
+  getFaceDirection(): Vec2;
+}
 
 export class Entity {
-  constructor(position, size, color) {
+  public position: Vec2;
+  public size: Size;
+  public color: string;
+
+  constructor(position : Vec2, size: Size, color?: string) {
     this.position = position;
     this.size = size;
     this.color = color;

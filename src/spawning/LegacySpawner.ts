@@ -1,5 +1,5 @@
-import {Vec2} from '../core.js';
-import {Shimu, Enemy} from '../entities/all.js';
+import {Vec2} from '../core';
+import {Shimu, Enemy} from '../entities/all';
 
 export class LegacySpawner {
   initialize(game, level) {

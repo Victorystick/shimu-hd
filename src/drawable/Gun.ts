@@ -1,7 +1,16 @@
-import {Size} from '../core.js';
-import * as easydraw from './easydraw.js';
+import {Vec2, Size} from '../core';
+import {DirectedEntity, Bullet} from '../entities/all';
+import * as easydraw from './easydraw';
 
 export class Gun {
+  public owner: DirectedEntity;
+  private projectileConstructor: (position: Vec2, direction: Vec2, owner: DirectedEntity) => void;
+  private reticule: Reticule;
+
+  private ammo: number;
+  private maxAmmo: number;
+  private cooldown: number;
+
   constructor(projectile) {
     this.owner = null;
     this.projectileConstructor = projectile;
@@ -45,6 +54,10 @@ export class Gun {
 }
 
 export class Reticule {
+  public size: Size;
+  public color: string;
+  public gun: Gun;
+
   constructor(gun) {
     this.size = new Size(4,4);
     this.color = 'white';

@@ -1,10 +1,10 @@
-import assert from 'assert';
-import {createArgSaver} from '../testing/mocks.js';
-import {Context} from '../testing/fakes.js';
-import {Vec2, Size} from '../core.js';
-import {Modern} from './modern.js';
-import {Game} from '../Game.js';
-import {PlasmaBullet, Enemy} from '../entities/all.js';
+import * as assert from 'assert';
+import {createArgSaver} from '../testing/mocks';
+import {Context} from '../testing/fakes';
+import {Vec2, Size} from '../core';
+import {Modern} from './modern';
+import {Game} from '../Game';
+import {PlasmaBullet, Enemy} from '../entities/all';
 
 describe('Modern', () => {
   describe('PlasmaBullet hits Enemy', () => {
@@ -19,7 +19,7 @@ describe('Modern', () => {
       const enemy = Enemy.standard(new Vec2(2, 2), 0);
       const oldHeat = bullet.heat;
       Modern.PlasmaBulletHitsEnemy(game, bullet, enemy);
-      assert(bullet.heat < oldHeat, 'heat should decrease');
+      assert.ok(bullet.heat < oldHeat, 'heat should decrease');
     });
   });
 });

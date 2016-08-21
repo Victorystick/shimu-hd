@@ -1,8 +1,8 @@
-import assert from 'assert';
-import {Context} from '../testing/fakes.js';
-import {Game} from '../Game.js';
-import {Size, Vec2} from '../core.js';
-import {Enemy} from './Enemy.js';
+import * as assert from 'assert';
+import {Context} from '../testing/fakes';
+import {Game} from '../Game';
+import {Size, Vec2} from '../core';
+import {Enemy} from './Enemy';
 
 describe('Enemy', () => {
   it('update moves toward the player', () => {

@@ -1,7 +1,9 @@
-import {Vec2, Size} from '../core.js';
-import {Entity} from './Entity.js';
+import {Vec2, Size} from '../core';
+import {Entity} from './Entity';
 
 export class Enemy extends Entity {
+	public hp;
+	public speed;
 	constructor(point, size, color, hp, speed) {
 		super(point, size, color);
 		this.hp = hp;

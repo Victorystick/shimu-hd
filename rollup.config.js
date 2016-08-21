@@ -1,8 +1,14 @@
+import typescript from 'rollup-plugin-typescript';
+
 export default {
-  entry: 'src/main.js',
+  entry: 'src/main.ts',
   dest: './app/shimu.js',
 
   moduleName: 'Shimu',
 
-  format: 'iife'
+  format: 'iife',
+
+  plugins: [
+    typescript()
+  ]
 };
