@@ -4,6 +4,7 @@
   "description": "Remake of the original Shimu",
   "main": "shimu.js",
   "scripts": {
+    "pretest": "typings install",
     "test": "mocha",
     "test:watch": "npm run test -- -w",
     "build": "rollup -c",
@@ -32,6 +33,7 @@
     "rollup-plugin-typescript": "^0.8.1",
     "rollup-watch": "^2.5.0",
     "surge": "^0.18.0",
-    "ts-node": "^1.3.0"
+    "ts-node": "^1.3.0",
+    "typings": "^1.3.2"
   }
 }
