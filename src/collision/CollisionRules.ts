@@ -1,5 +1,5 @@
-import {Game} from '../game';
-import {Entity} from '../entities/entity';
+import {Game} from '../Game';
+import {Entity} from '../entities/Entity';
 
 interface CollisionFunction {
   (game: Game, entity1: Entity, entity2: Entity): boolean;
