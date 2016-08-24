@@ -3,6 +3,7 @@ import {Size} from './core.js';
 import {Context} from './testing/fakes.js';
 import {createArgSaver} from './testing/mocks.js';
 import {Game, removeElementsInSet} from './Game.js';
+import {ScoreSystem} from './ScoreSystem.js';
 
 describe('removeElementsInSet', () => {
   it('does nothing for the empty set', () => {
@@ -41,7 +42,7 @@ describe('Game', () => {
       initialize: createArgSaver()
     };
 
-    const game = new Game(fakeContext, logic, null, null);
+    const game = new Game(fakeContext, logic, null, null, new ScoreSystem());
     game.initialize();
 
     // `logic.initialize` should be called with the game instance.
@@ -50,7 +51,7 @@ describe('Game', () => {
 
   it('start', () => {
     const framer = createArgSaver();
-    const game = new Game(fakeContext, { initialize() {} }, null, framer);
+    const game = new Game(fakeContext, { initialize() {} }, null, framer, new ScoreSystem());
 
     assert.equal(game.start(), game);
     assert.deepEqual(framer.args, [game.tick, game]);
@@ -62,7 +63,7 @@ describe('Game', () => {
       checkCollisions: createArgSaver()
     };
 
-    const game = new Game(fakeContext, logic, null, null);
+    const game = new Game(fakeContext, logic, null, null, null);
 
     // Assume 13ms has passed.
     game.update(13);
@@ -82,7 +83,7 @@ describe('Game', () => {
         checkCollisions: createArgSaver()
       };
 
-      const game = new Game(fakeContext, logic, null, null);
+      const game = new Game(fakeContext, logic, null, null, null);
       game.tick(10);
 
       assert.deepEqual(logic.update.args, [game, 10]);
@@ -100,7 +101,7 @@ describe('Game', () => {
 
       const framer = createArgSaver();
 
-      const game = new Game(fakeContext, logic, null, framer);
+      const game = new Game(fakeContext, logic, null, framer, null);
       game.tick(10);
 
       assert.deepEqual(logic.update.args, [game, 10]);

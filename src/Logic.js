@@ -1,3 +1,5 @@
+import {Injected} from './injecter.js';
+import {ScoreSystem} from './ScoreSystem.js';
 import {Vec2} from './core.js';
 import {Enemy} from './entities/all.js';
 import {CollisionRules} from './collision/CollisionRules.js';
@@ -26,6 +28,10 @@ export class Logic {
 
     if (this.timeSinceSpawn >= 15000 || game.entities.filter(e => e instanceof Enemy).length < 10) {
       this.spawner.spawn(game, this.level++);
+      
+      const timeRemaining = 15000 - this.timeSinceSpawn
+      Injected(ScoreSystem).onLevelChange(game.player, this.level, timeRemaining); 
+
       this.timeSinceSpawn -= 15000;
       if (this.timeSinceSpawn < 0) {
         this.timeSinceSpawn = 0;
@@ -56,6 +62,9 @@ export class Logic {
     ctx.strokeText(`Ammo:`, 10, 40);
     ctx.fillStyle = 'white';
     ctx.fillRect(50, 32, 100 / gun.maxAmmo * gun.ammo, 10);
+
+    const score = Math.floor(Injected(ScoreSystem).getScore(game.player));
+    ctx.strokeText(`Score: ${score}`, 170, 20);
   }
 }
 

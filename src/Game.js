@@ -1,3 +1,5 @@
+import {Injected} from './injecter.js';
+import {ScoreSystem} from './ScoreSystem.js';
 import {Keyboard} from './controls.js';
 import {Entity} from './entities/all.js';
 import {Size, Vec2} from './core.js';
@@ -33,6 +35,8 @@ export class Game {
 
   initialize() {
     this.logic.initialize(this);
+
+    Injected(ScoreSystem).initialize(this.player);
   }
 
   tick(delta) {
