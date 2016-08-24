@@ -1,5 +1,5 @@
 import assert from 'assert';
-import {Bullet} from './Bullet.js';
+import {Bullet, PlasmaBullet} from './Bullet.js';
 import {Vec2, Size} from '../core.js';
 import {Context} from '../testing/fakes.js';
 import {Game} from '../Game.js';
@@ -50,5 +50,38 @@ describe('Bullet', () => {
     it('can hit anything else', () => {
       assert(ownerBullet.hits(bullet));
     });
+  });
+});
+
+describe('PlasmaBullet', () => {
+  const position = new Vec2(2, 2);
+  const direction = new Vec2(0, 1);
+
+  it('is orange', () => {
+    const bullet = new PlasmaBullet(position, direction, null);
+    assert.equal(bullet.color, 'orange');
+  });
+
+  it('has heat', () => {
+    const bullet = new PlasmaBullet(position, direction, null);
+    assert(bullet.heat > 0, 'initial heat should be positive');
+  });
+
+  it('loses heat over time', () => {
+    const game = new Game(new Context(new Size(0, 0)), null, null, null, null);
+    const bullet = new PlasmaBullet(position, direction, null);
+    const oldHeat = bullet.heat;
+
+    bullet.update(game, 3);
+    assert(bullet.heat < oldHeat, 'heat should decrease');
+  });
+
+  it('is removed when out of heat', () => {
+    const bullet = new PlasmaBullet(position, direction, null);
+    const game = new Game(new Context(new Size(0, 0)), null, null, null, null);
+
+    bullet.heat = 0;
+    bullet.update(game, 0);
+    assert(game.removeSet.has(bullet), 'bullet should be in removeSet');
   });
 });

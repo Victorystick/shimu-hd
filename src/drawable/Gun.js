@@ -1,4 +1,5 @@
 import {Size} from '../core.js';
+import * as easydraw from './easydraw.js';
 
 export class Gun {
   constructor(projectile) {
@@ -21,7 +22,7 @@ export class Gun {
   }
 
   draw(ctx) {
-    //this.reticule.draw(ctx);
+    this.reticule.draw(ctx);
   }
 
   fire(game) {
@@ -51,9 +52,9 @@ export class Reticule {
   }
 
   draw(ctx) {
-    ctx.strokeStyle = String(this.color);
-    ctx.lineWidth = String(3);
-    ctx.rect(this.gun.owner.position.x + 7, this.gun.owner.position.y, this.size.width, this.size.height);
-    ctx.stroke();
+    const owner = this.gun.owner;
+    const pos = owner.getFaceDirection().scale(20).add(owner.position);
+
+    easydraw.strokeRect(ctx, pos, this.size, this.color);
   }
 }

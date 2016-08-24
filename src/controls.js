@@ -1,3 +1,4 @@
+export {Touch} from './controls/Touch.js';
 import {Vec2} from './core.js';
 
 /*

@@ -3,6 +3,7 @@ import {Size} from './core.js';
 import {Context} from './testing/fakes.js';
 import {createArgSaver} from './testing/mocks.js';
 import {Game, removeElementsInSet} from './Game.js';
+import {ScoreSystem} from './ScoreSystem.js';
 
 describe('removeElementsInSet', () => {
   it('does nothing for the empty set', () => {
@@ -41,11 +42,8 @@ describe('Game', () => {
       initialize: createArgSaver()
     };
 
-    const game = new Game(fakeContext, logic, null, null);
+    const game = new Game(fakeContext, logic, null, null, new ScoreSystem());
     game.initialize();
-
-    // Assume the player character is the only entity.
-    assert.deepEqual(game.entities, [game.player]);
 
     // `logic.initialize` should be called with the game instance.
     assert.deepEqual(logic.initialize.args, [game]);
@@ -53,7 +51,7 @@ describe('Game', () => {
 
   it('start', () => {
     const framer = createArgSaver();
-    const game = new Game(fakeContext, { initialize() {} }, null, framer);
+    const game = new Game(fakeContext, { initialize() {} }, null, framer, new ScoreSystem());
 
     assert.equal(game.start(), game);
     assert.deepEqual(framer.args, [game.tick, game]);
@@ -61,44 +59,53 @@ describe('Game', () => {
 
   it('update', () => {
     const logic = {
-      update: createArgSaver()
+      update: createArgSaver(),
+      checkCollisions: createArgSaver()
     };
 
-    const game = new Game(fakeContext, logic, null, null);
+    const game = new Game(fakeContext, logic, null, null, null);
 
     // Assume 13ms has passed.
     game.update(13);
 
-    // `logic.update` should be called with the game instance.
+    // `logic.update` and `logic.checkCollisions` 
+    // should be called with the game instance.
     assert.deepEqual(logic.update.args, [game, 13]);
+    assert.deepEqual(logic.checkCollisions.args, [game, [] ])
   });
 
   describe('tick', () => {
-    it('calls update and render', () => {
+    it('calls update, checkCollisions and render', () => {
       const logic = {
         continue: createArgSaver(false),
-        update: createArgSaver()
+        draw: createArgSaver(),
+        update: createArgSaver(),
+        checkCollisions: createArgSaver()
       };
 
-      const game = new Game(fakeContext, logic, null, null);
+      const game = new Game(fakeContext, logic, null, null, null);
       game.tick(10);
 
       assert.deepEqual(logic.update.args, [game, 10]);
+      assert.deepEqual(logic.draw.args, [game, game.ctx]);
       assert.deepEqual(logic.continue.args, []);
     });
 
     it('it also calls nextFrame if logic.continue()', () => {
       const logic = {
         continue: createArgSaver(true),
-        update: createArgSaver()
+        draw: createArgSaver(),
+        update: createArgSaver(),
+        checkCollisions: createArgSaver()
       };
 
       const framer = createArgSaver();
 
-      const game = new Game(fakeContext, logic, null, framer);
+      const game = new Game(fakeContext, logic, null, framer, null);
       game.tick(10);
 
       assert.deepEqual(logic.update.args, [game, 10]);
+      assert.deepEqual(logic.draw.args, [game, game.ctx]);
       assert.deepEqual(logic.continue.args, []);
       assert.deepEqual(framer.args, [game.tick, game]);
     });
