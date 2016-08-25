@@ -2,11 +2,13 @@ import {Injected} from '../injecter.js';
 import {ScoreSystem} from '../ScoreSystem.js';
 import {CollisionRules} from './CollisionRules.js';
 import {Shimu, Bullet, PlasmaBullet, Enemy} from '../entities/all.js';
+import * as kill from './kill.js';
 
 export class Modern {
   static initialize(rules) {
     rules.add(PlasmaBullet, Enemy, Modern.PlasmaBulletHitsEnemy);
     rules.add(Bullet, Enemy, Modern.BulletHitsEnemy);
+    rules.add(Enemy, Shimu, kill.theLatter);
   }
 
   static PlasmaBulletHitsEnemy(game, bullet, enemy) {

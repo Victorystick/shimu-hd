@@ -10,9 +10,14 @@ export class Shimu extends ArmedEntity {
     super(position, size, 'red', new Gun(PlasmaBullet));
     this.controls = controls;
     this.speed = 0.1;
+    this.alive = true;
   }
 
   update(game, delta) {
+    if (!this.alive) {
+      return;
+    }
+
     this.position.add(this.controls.getMoveDirection(this).scale(this.speed * delta));
 
     this.gun.update(game, delta);
@@ -20,6 +25,10 @@ export class Shimu extends ArmedEntity {
     if (this.controls.attemptsPrimaryAction()) {
     	this.gun.fire(game);
     }
+  }
+
+  kill() {
+    this.alive = false;
   }
 
   getFaceDirection() {

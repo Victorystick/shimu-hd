@@ -3,7 +3,7 @@ import {Context, Controls} from './testing/fakes.js';
 import {createArgSaver} from './testing/mocks.js';
 import {Game} from './Game.js';
 import {Logic} from './Logic.js';
-import {Size} from './core.js';
+import {Size, Vec2} from './core.js';
 import {Enemy} from './entities/all.js';
 
 describe('Logic', () => {
@@ -44,7 +44,7 @@ describe('Logic', () => {
     game.initialize();
 
     for (var i = 0; i < 20; i++) {
-      game.entities.push(new Enemy());
+      game.entities.push(Enemy.standard(new Vec2(0, 0), 0));
     }
 
 
