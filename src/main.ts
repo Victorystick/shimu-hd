@@ -1,3 +1,4 @@
+import {Injected} from './injecter.js';
 import {Game} from './Game.ts';
 import {Modern} from './collision/modern.ts';
 import {LegacySpawner} from './spawning/LegacySpawner.ts';
@@ -13,7 +14,6 @@ function getControls() {
 export default {
   start(canvas) {
     const Controls = getControls();
-
     const logic = new Logic(Modern, new LegacySpawner());
     const ctrl = new Controls(canvas);
     const ticker = createAnimationTicker();

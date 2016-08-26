@@ -3,6 +3,8 @@ import {Spawner} from './spawning/Spawner'
 import {Enemy} from './entities/all';
 import {CollisionRules, RulesSet} from './collision/CollisionRules';
 import {Modern} from './collision/modern';
+import {Injected} from './injecter';
+import {ScoreSystem} from './ScoreSystem';
 
 export class Logic {
   private running: boolean;
@@ -33,6 +35,10 @@ export class Logic {
 
     if (this.timeSinceSpawn >= 15000 || game.entities.filter(e => e instanceof Enemy).length < 10) {
       this.spawner.spawn(game, this.level++);
+      
+      const timeRemaining = 15000 - this.timeSinceSpawn
+      Injected(ScoreSystem).onLevelChange(game.player, this.level, timeRemaining); 
+
       this.timeSinceSpawn -= 15000;
       if (this.timeSinceSpawn < 0) {
         this.timeSinceSpawn = 0;
@@ -63,6 +69,9 @@ export class Logic {
     ctx.strokeText(`Ammo:`, 10, 40);
     ctx.fillStyle = 'white';
     ctx.fillRect(50, 32, 100 / gun.maxAmmo * gun.ammo, 10);
+
+    const score = Math.floor(Injected(ScoreSystem).getScore(game.player));
+    ctx.strokeText(`Score: ${score}`, 170, 20);
   }
 }
 

@@ -3,6 +3,7 @@ import {Size} from './core';
 import {Context} from './testing/fakes';
 import {createArgSaver} from './testing/mocks';
 import {Game, removeElementsInSet} from './Game';
+import {ScoreSystem} from './ScoreSystem';
 
 describe('removeElementsInSet', () => {
   it('does nothing for the empty set', () => {

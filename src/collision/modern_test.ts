@@ -4,6 +4,7 @@ import {Context} from '../testing/fakes';
 import {Vec2, Size} from '../core';
 import {Modern} from './modern';
 import {Game} from '../Game';
+import {ScoreSystem} from '../ScoreSystem';
 import {PlasmaBullet, Enemy} from '../entities/all';
 
 describe('Modern', () => {

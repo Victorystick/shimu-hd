@@ -1,6 +1,8 @@
 import {EntityControls} from './controls';
 import {Entity} from './entities/all';
 import {Size, Vec2} from './core';
+import {Injected} from './injecter';
+import {ScoreSystem} from './ScoreSystem';
 
 export class Game {
   public ctx: any;
@@ -42,6 +44,8 @@ export class Game {
 
   initialize() {
     this.logic.initialize(this);
+
+    Injected(ScoreSystem).initialize(this.player);
   }
 
   tick(delta) {
